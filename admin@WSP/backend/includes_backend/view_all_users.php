@@ -1,3 +1,14 @@
+<script>
+$(document).ready(function(){                
+   $('#example').DataTable({
+        layout: {
+            topStart: {
+                buttons: ['copy', 'excel', 'pdf', 'colvis']
+            }
+        },
+    });
+});
+</script>
 <?php
 // Delete User.
 if (isset($_GET["delete"])) {
@@ -12,7 +23,7 @@ if (isset($_GET["delete"])) {
 
 ?>
 
-<table class="table table-bordered table-hover text-center">
+<table id="example" class="display" style="width:100%">
     <thead >
         <tr >
             <th class="text-center">ID</th>
