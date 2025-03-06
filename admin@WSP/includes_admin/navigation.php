@@ -37,7 +37,7 @@
 ?>
 
 <?php if ($is_post_page || $is_activity_page): ?>
-    <li class="nav-item dropdown pe-3">
+      <li class="nav-item dropdown pe-3">
         <?php if ($is_post_page): ?>
             <a href="./backend/posts.php" style="text-decoration: none; color:#074799;">Post</a>
         <?php elseif ($is_activity_page): ?>
