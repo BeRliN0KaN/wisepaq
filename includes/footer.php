@@ -32,7 +32,7 @@
                     <div class="col-lg-4 col-md-6  ps-5">
                         <h1 class="text-dark mb-4"><?php echo constant('page_footer_6') ?></h1>
                         <?php
-                        $query = "SELECT * FROM quick_link";
+                        $query = "SELECT * FROM quick_link where active=1";
                         $fetch_data = mysqli_query($connection, $query);
 
                         if (mysqli_num_rows($fetch_data) == 0) {
