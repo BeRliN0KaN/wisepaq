@@ -36,7 +36,7 @@
     $is_activity_page = strpos($_SERVER['REQUEST_URI'], 'activity.php') !== false;
 ?>
 
-<?php if (!$is_index_page && ($is_post_page || $is_activity_page)): ?>
+<?php if ($is_post_page || $is_activity_page): ?>
     <li class="nav-item dropdown pe-3">
         <?php if ($is_post_page): ?>
             <a href="./backend/posts.php" style="text-decoration: none; color:#074799;">Post</a>
