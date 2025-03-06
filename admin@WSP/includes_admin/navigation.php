@@ -43,9 +43,14 @@
         <?php elseif ($is_activity_page): ?>
             <a href='./backend/activity.php' style="text-decoration: none; color:#074799;">Activity</a>
         <?php endif; ?>
+    <?php endif; ?>
     </li>
-<?php endif; ?>
+    <?php if(isset($_SESSION['username'])){ ?>
+    <li class="nav-item dropdown pe-3">
+        <a href="./backend/index.php" style="text-decoration: none; color:#074799;">Dashboard</a>
+    </li>
+    <?php } ?>
         </ul>
     </nav><!-- End Icons Navigation -->
-
-</header><!-- End Header -->
+</header>
+<!-- End Header -->
