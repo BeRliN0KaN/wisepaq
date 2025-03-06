@@ -88,7 +88,6 @@ if (isset($_POST['create_post'])) {
     </div>
     <div class="form-group col-lg-4">
         <label class="fw-bold ms-3" for="activity_pin">Activity Pin</label>
-        <label for="activity_pin">Activity Pin</label>
         <select class="form-control mt-2" name="activity_pin" id="activity_category">
             <option value='0'>Select Option</option>
             <option value='1'>Important</option>
