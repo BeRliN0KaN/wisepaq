@@ -46,7 +46,7 @@ if (isset($_POST['create_post'])) {
                                     </div>-->
     <!--x-->
     <div class="form-group col-lg-12">
-        <label for="activity_image" class="d-block ms-3 fw-bold ms-3">Activityc Image</label>
+        <label for="activity_image" class="d-block ms-3 fw-bold ms-3">Activity Image</label>
         <div>
             <label for="activity_image" class="upload-icon">
                 <span style="margin-left: 8px ;">เลือกไฟล์รูปภาพ</span> <i class="fa fa-file-image-o" aria-hidden="true" style="font-size: 2.3rem;"></i>
