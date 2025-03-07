@@ -1413,6 +1413,7 @@ section,
 }
 
 .clients .swiper-wrapper {
+  pointer-events: none;
   height: auto;
 }
 
