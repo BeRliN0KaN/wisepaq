@@ -1,48 +1,6 @@
   <!-- Start Header -->
   <?php include("./includes/header.php") ?>
   <!-- End Header -->
-<<<<<<< HEAD
-  <style>
-    .container_part {
-      height: 250px;
-      width: 90%;
-      position: relative;
-      /* display: grid;
-  place-items: center; */
-      overflow: hidden;
-      margin: 0 auto;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    .banner {
-      position: absolute;
-      overflow: hidden;
-      white-space: nowrap;
-      /*display: flex;
-  width: calc(250px*12);*/
-      /* animation: scroll 4s linear infinite; */
-      font-size: 0;
-      /* to get rid of gaps between inline elements */
-    }
-
-    @keyframes scroll {
-      0% {
-        transform: translateX(0);
-      }
-
-      100% {
-        transform: translateX(-50%);
-      }
-    }
-  </style>
-=======
-  
->>>>>>> 638d1231a2e603279c58ba6e3172c3b54e24b663
   <main class="main">
 
     <!-- Hero Section -->

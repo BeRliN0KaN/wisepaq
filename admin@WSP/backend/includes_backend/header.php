@@ -118,6 +118,15 @@ session_start();
             <li>
               <hr class="dropdown-divider">
             </li>
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="../../index.php">
+                <i class="bi bi-display"></i>
+                <span>Website</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
 
             <!-- <li>
       <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
