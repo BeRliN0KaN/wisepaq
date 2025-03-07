@@ -1,7 +1,6 @@
   <!-- Start Header -->
   <?php include("./includes/header.php") ?>
   <!-- End Header -->
-  
   <main class="main">
 
     <!-- Hero Section -->

@@ -2,9 +2,9 @@
 ob_start();
 include '../../includes/db.php';
 session_start();
-if (!isset($_SESSION['username'])) {
-  header("Location: ../index.php");
-}
+// if (!isset($_SESSION['username'])) {
+//   header("Location: ../index.php");
+// }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -113,6 +113,15 @@ if (!isset($_SESSION['username'])) {
               <a class="dropdown-item d-flex align-items-center" href="profile.php">
                 <i class="bi bi-person"></i>
                 <span>My Profile</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="../../index.php">
+                <i class="bi bi-display"></i>
+                <span>Website</span>
               </a>
             </li>
             <li>

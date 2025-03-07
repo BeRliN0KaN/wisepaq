@@ -3,9 +3,8 @@ if (isset($_POST['add_user'])) {
     $user_firstname = $_POST['firstname'];
     $user_lastname = $_POST['lastname'];
     $user_name = $_POST['username'];
-    $user_password = md5($_POST['password']);
+    $user_password = password_hash($_POST['password'],PASSWORD_DEFAULT);
     $user_email = $_POST['email'];
-
     // Check exist user.
     $user = 1;
     $queryExist = "SELECT EXISTS(SELECT * FROM tbl_users WHERE user_name = '$user_name') as user";
