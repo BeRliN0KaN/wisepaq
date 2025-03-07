@@ -55,7 +55,7 @@ define('page_index_solution_3', '将您的业务提升到更高的现代化和�
 define('page_index_solution_4', '我们为您的团队提供先进的技术保护，确保在安全的环境中无缝协作。');
 
 define('page_index_activity_1', '我们在Wisepaq专注于提供优质服务并为客户提供最佳解决方案。');
-define('page_index_activity_2', '在Wisepaq，我们致力于提供最高质量的服务，充分满足客户需求。我们不仅专注于提供最好的产品和解决方案，还优先通过高效支持和细致关怀，为客户创造积极的体验。');
+define('page_index_activity_2', '在Wisepaq，我们致力于提供最高质量的服务，充分满足客户的需求。'.'<br>'.'不仅仅是提供最佳的产品和解决方案，还专注于为客户创造良好的体验，并在每一个服务环节中提供细致的关怀。');
 define('page_index_activity_3', '查看活动');
 
 define('page_index_contact_1', '让我们共同建设未来。');

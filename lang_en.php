@@ -59,7 +59,7 @@ define('page_index_solution_3', 'Take your business to the next level of moderni
 define('page_index_solution_4', 'We provide protection for your team with advanced technologies that enable seamless collaboration in a secure environment.');
 
 define('page_index_activity_1', 'We at Wisepaq focus on providing excellent service and offering the best solutions for our customers.');
-define('page_index_activity_2', "At Wisepaq, we are committed to providing the highest quality service and fully meeting our customers' needs. We don’t just focus on offering the best products and solutions, but also prioritize creating a positive experience for our customers through efficient support and attentive care at every step of their journey with us.");
+define('page_index_activity_2', "At Wisepaq, we are committed to providing the highest quality service and fully responding to the needs of our customers." ."<br>".  "Not only do we supply the best products and solutions, but we also focus on creating a positive experience for our customers and providing attentive care at every step of the service process.");
 define('page_index_activity_3', 'View Activity');
 
 define('page_index_contact_1', "Let's build the future together.");

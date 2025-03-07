@@ -293,7 +293,7 @@
       }
     ?>
       <div class="container">
-        <div class="banner" style="pointer-events: none;">
+        <div class="banner">
           <?php echo  $the_post_content; ?>
         </div>
       </div>
