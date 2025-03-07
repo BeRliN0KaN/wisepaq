@@ -1,7 +1,44 @@
   <!-- Start Header -->
   <?php include("./includes/header.php") ?>
   <!-- End Header -->
+  <style>
+    .container {
+      height: 250px;
+      width: 90%;
+      position: relative;
+      /* display: grid;
+  place-items: center; */
+      overflow: hidden;
+      margin: 0 auto;
+    }
 
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    .banner {
+      position: absolute;
+      overflow: hidden;
+      white-space: nowrap;
+      /*display: flex;
+  width: calc(250px*12);*/
+      animation: scroll 4s linear infinite;
+      font-size: 0;
+      /* to get rid of gaps between inline elements */
+    }
+
+    @keyframes scroll {
+      0% {
+        transform: translateX(0);
+      }
+
+      100% {
+        transform: translateX(-50%);
+      }
+    }
+  </style>
   <main class="main">
 
     <!-- Hero Section -->
@@ -21,18 +58,18 @@
                 $lang = $_SESSION['lang'];
                 switch ($lang) {
                   case 'en':
-                      $the_post_title = base64_decode($Row['post_title']);
-                      $the_post_content = base64_decode($Row['post_content']);
-                      break;
+                    $the_post_title = base64_decode($Row['post_title']);
+                    $the_post_content = base64_decode($Row['post_content']);
+                    break;
                   case 'cn':
-                      $the_post_title = base64_decode($Row['post_title_china']);
-                      $the_post_content = base64_decode($Row['post_content_china']);
-                      break;
+                    $the_post_title = base64_decode($Row['post_title_china']);
+                    $the_post_content = base64_decode($Row['post_content_china']);
+                    break;
                   default:
-                      $the_post_title = base64_decode($Row['post_title_thai']);
-                      $the_post_content = base64_decode($Row['post_content_thai']);
-                      break;
-              }
+                    $the_post_title = base64_decode($Row['post_title_thai']);
+                    $the_post_content = base64_decode($Row['post_content_thai']);
+                    break;
+                }
               ?>
 
                 <span> <?php echo $the_post_content; ?></span>
@@ -62,18 +99,18 @@
           $lang = $_SESSION['lang'];
           switch ($lang) {
             case 'en':
-                $the_post_title = base64_decode($Row['post_title']);
-                $the_post_content = base64_decode($Row['post_content']);
-                break;
+              $the_post_title = base64_decode($Row['post_title']);
+              $the_post_content = base64_decode($Row['post_content']);
+              break;
             case 'cn':
-                $the_post_title = base64_decode($Row['post_title_china']);
-                $the_post_content = base64_decode($Row['post_content_china']);
-                break;
+              $the_post_title = base64_decode($Row['post_title_china']);
+              $the_post_content = base64_decode($Row['post_content_china']);
+              break;
             default:
-                $the_post_title = base64_decode($Row['post_title_thai']);
-                $the_post_content = base64_decode($Row['post_content_thai']);
-                break;
-        }
+              $the_post_title = base64_decode($Row['post_title_thai']);
+              $the_post_content = base64_decode($Row['post_content_thai']);
+              break;
+          }
         ?>
           <div>
             <?php echo $the_post_content; ?>
@@ -279,21 +316,23 @@
       $lang = $_SESSION['lang'];
       switch ($lang) {
         case 'en':
-            $the_post_title = base64_decode($Row['post_title']);
-            $the_post_content = base64_decode($Row['post_content']);
-            break;
+          $the_post_title = base64_decode($Row['post_title']);
+          $the_post_content = base64_decode($Row['post_content']);
+          break;
         case 'cn':
-            $the_post_title = base64_decode($Row['post_title_china']);
-            $the_post_content = base64_decode($Row['post_content_china']);
-            break;
+          $the_post_title = base64_decode($Row['post_title_china']);
+          $the_post_content = base64_decode($Row['post_content_china']);
+          break;
         default:
-            $the_post_title = base64_decode($Row['post_title_thai']);
-            $the_post_content = base64_decode($Row['post_content_thai']);
-            break;
-    }
+          $the_post_title = base64_decode($Row['post_title_thai']);
+          $the_post_content = base64_decode($Row['post_content_thai']);
+          break;
+      }
     ?>
-      <div>
-        <?php echo $the_post_content; ?>
+      <div class="container">
+        <div class="banner">
+          <?php echo  $the_post_content; ?>
+        </div>
       </div>
     <?php } ?>
   </main>
