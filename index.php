@@ -333,13 +333,8 @@
           break;
       }
     ?>
-<<<<<<< HEAD
-      <div class="container_part">
-        <div class="banner">
-=======
       <div class="container">
         <div class="banner" style="pointer-events: none;">
->>>>>>> 638d1231a2e603279c58ba6e3172c3b54e24b663
           <?php echo  $the_post_content; ?>
         </div>
       </div>
