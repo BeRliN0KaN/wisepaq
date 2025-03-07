@@ -16,7 +16,16 @@ if (isset($_POST['update_profile'], $_SESSION['username'])) {
     // move_uploaded_file($post_image_temp, "../images/$post_image");
 
 
-    $password = md5($user_password);
+    // $password = md5($user_password);
+    $sql = "SELECT user_password FROM tbl_users WHERE user_name = '$the_user_name'";
+    $result = mysqli_query($connection, $sql);
+    $row = mysqli_fetch_assoc($result);     
+    $storedHash = $row['user_password'];
+    if (!empty($user_password)) {
+        $password = password_hash($user_password, PASSWORD_DEFAULT);
+    } else {
+        $password = $storedHash;
+    }
 
 
     // Update a User.
@@ -80,7 +89,7 @@ if (isset($_POST['update_profile'], $_SESSION['username'])) {
 
                         <div class="form-group mt-3">
                             <label for="password" class="ms-3 fw-bold">Password</label>
-                            <input type="password" class="form-control mt-2" name="password" value='<?php echo $password; ?>'>
+                            <input type="password" class="form-control mt-2" name="password" placeholder="Enter new password">
                         </div>
 
                         <div class="form-group mt-3">

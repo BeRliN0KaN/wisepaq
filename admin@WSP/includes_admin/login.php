@@ -4,10 +4,10 @@ session_start();
 
 if (isset($_POST['login'])) {
     $username = $_POST['username'];
-    $password = md5($_POST['password']);
+    $password_input = $_POST['password'];
 
     $username = mysqli_real_escape_string($connection, $username);
-    $password = mysqli_real_escape_string($connection, $password);
+    // $password_input = mysqli_real_escape_string($connection, $password_input);
 
     $query = "SELECT * FROM tbl_users WHERE user_name='$username'";
     $select_user_query = mysqli_query($connection, $query);
@@ -17,7 +17,7 @@ if (isset($_POST['login'])) {
      //echo  $password = encrypt($password);
      //exit;
 
-    if (empty($username) || empty($password)) {
+    if (empty($username) || empty($password_input)) {
              echo "<script>alert('Not found user!');window.history.go(-1);</script>";
                 // header("Location: ../index.php");
     } else {
@@ -28,9 +28,10 @@ if (isset($_POST['login'])) {
                 $user_firstname = $Row['user_firstname'];
                 $user_lastname = $Row['user_lastname'];
                 $user_password = $Row['user_password'];
+
             }       
 
-                if ($username === $user_name && $password === $user_password) {           
+                if ($username === $user_name && password_verify($password_input,$user_password)) {           
                         $_SESSION['username'] = $user_name;
                         $_SESSION['firstname'] = $user_firstname;
                         $_SESSION['lastname'] = $user_lastname;

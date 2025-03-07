@@ -2,7 +2,7 @@
   <?php include("./includes/header.php") ?>
   <!-- End Header -->
   <style>
-    .container {
+    .container_part {
       height: 250px;
       width: 90%;
       position: relative;
@@ -24,7 +24,7 @@
       white-space: nowrap;
       /*display: flex;
   width: calc(250px*12);*/
-      animation: scroll 4s linear infinite;
+      /* animation: scroll 4s linear infinite; */
       font-size: 0;
       /* to get rid of gaps between inline elements */
     }
@@ -329,7 +329,7 @@
           break;
       }
     ?>
-      <div class="container">
+      <div class="container_part">
         <div class="banner">
           <?php echo  $the_post_content; ?>
         </div>

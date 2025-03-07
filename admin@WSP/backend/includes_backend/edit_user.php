@@ -5,7 +5,7 @@ if (isset($_POST['update_user'], $_GET['user_id'])) {
     $user_firstname = $_POST['firstname'];
     $user_lastname = $_POST['lastname'];
     $user_username = $_POST['username'];
-    $user_password = $_POST['password'];
+    $user_password_input = $_POST['password'];
     $user_email = $_POST['email'];
 
     // $post_image = $_FILES['post_image']['name'];
@@ -15,8 +15,19 @@ if (isset($_POST['update_user'], $_GET['user_id'])) {
 
 
     // Engrypt Password.
-    $user_password =  md5($user_password);
-
+    // $user_password =  md5($user_password);
+    $sql = "SELECT user_password FROM tbl_users WHERE user_id = '$the_user_id'";
+    $result = mysqli_query($connection, $sql);
+    $row = mysqli_fetch_assoc($result);
+    $storedHash = $row['user_password'];
+    // ตรวจสอบว่าผู้ใช้กรอกรหัสผ่านใหม่หรือไม่
+    if (!empty($user_password_input)) {
+        // ถ้าผู้ใช้กรอกรหัสผ่านใหม่, แฮชรหัสผ่านใหม่
+        $user_password = password_hash($user_password_input, PASSWORD_DEFAULT);
+    } else {
+        // ถ้าผู้ใช้ไม่กรอกรหัสผ่านใหม่, ใช้รหัสผ่านเก่าที่เก็บในฐานข้อมูล
+        $user_password = $storedHash;
+    }
     // Update a User.
     $query = "UPDATE tbl_users SET ";
     $query .= "user_firstname='$user_firstname', ";
@@ -68,7 +79,7 @@ if (isset($_GET['user_id'])) {
 
             <div class="form-group mt-3">
                 <label for="password" class="ms-3 fw-bold">Password</label>
-                <input type="password" class="form-control mt-2" name="password" value='<?php echo $password; ?>'>
+                <input type="password" class="form-control mt-2" name="password" placeholder="Enter new password">
             </div>
 
             <div class="form-group mt-3">

@@ -98,7 +98,7 @@ if (isset($_POST["apply"])) {
             </div>
             <div class="col-7">
                 <input type="submit" class="btn btn-success" name="apply" value="Apply">
-                <a class="btn btn-primary" href="posts.php?source=add_activity">Add New</a>
+                <a class="btn btn-primary" href="activity.php?source=add_activity">Add New</a>
             </div>
         </div>
         <thead>
