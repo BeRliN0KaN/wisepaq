@@ -48,6 +48,9 @@ if (isset($_POST['add_user'])) {
 ?>
 
 <form action="" method="post" enctype="multipart/form-data">
+    <div class="py-2">
+        <h5 class="card-title text-center pb-0 fs-4"><strong>Add User</strong> </h5>
+    </div>
     <div class="form-group">
         <label for="user_image" class="d-block fw-bold ms-3">User Image</label>
         <div>

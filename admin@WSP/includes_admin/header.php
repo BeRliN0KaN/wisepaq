@@ -22,7 +22,7 @@ if (isMobile()) {
     <title>WISEPAQ | วางระบบ network | Thailand</title>
 
     <!-- Favicon -->
-    <link href="../img/wisepaq.jpg" rel="icon">
+    <link href="../img/logo/wisepaq.jpg" rel="icon">
 
     <!-- Bootstrap Core CSS -->
     <link href="css/style.css" rel="stylesheet">

@@ -18,6 +18,7 @@
                         <p class="mb-2 "><i class="fa fa-fax me-3 text-primary"></i><?php echo constant('page_footer_3.1') ?></p>
                         <p class="mb-2 "><i class="fa fa-envelope me-3 text-primary"></i><?php echo constant('page_footer_4') ?></p>
                         <p class="mb-2 "><i class="fab fa-line me-3 text-primary"></i><?php echo constant('page_footer_4.1') ?></p>
+                        <p class="mb-2 "><i class="fas fa-user me-3 text-primary"></i>จำนวนผู้เข้าชมเว็บไซต์: <?php echo $total_visitors; ?></p>
                         <div class="d-flex ">
                             <a class="btn btn-outline-light btn-social " href="https://www.facebook.com/Wisepaqbusiness/" target="_blank">
                                 <i class="bi bi-facebook fs-4 mt-1"></i></a>

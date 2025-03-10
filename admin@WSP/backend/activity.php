@@ -58,14 +58,17 @@ if (isset($_GET["deletePost"])) {
 ?>
 
 <main id="main" class="main">
-    <div class="card">
+<div class="pagetitle">
+        <h1>View All Activity</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.php">Home</a></li>
+                <li class="breadcrumb-item "><a href="activity.php">View All Activity</a></li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+    <div class="card pt-5">
         <div class="card-body">
-            <!-- Page Heading -->
-            <div class="pagetitle">
-                <h1 class="fs-1 pb-1 ps-4 py-5">
-                    Welcome to <span style="color: #578FCA;">ACTIVITY</span>
-                </h1>
-            </div><!-- End Page Title -->
             <?php
             if (isset($_GET['source'])) {
                 $source = $_GET['source'];

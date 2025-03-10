@@ -22,7 +22,7 @@ if (!isset($_SESSION['username'])) {
   <title>WISEPAQ | วางระบบ network | Thailand</title>
 
   <!-- Favicon -->
-  <link href="../../img/wisepaq.jpg" rel="icon">
+  <link href="../../img/logo/wisepaq.jpg" rel="icon">
   <meta content="" name="description">
   <meta content="" name="keywords">
 

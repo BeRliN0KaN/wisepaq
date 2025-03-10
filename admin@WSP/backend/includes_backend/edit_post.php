@@ -97,7 +97,7 @@ if (isset($_GET['p_id'])) {
                 <label for="post_image" class="d-block fw-bold ms-3">Post Image</label>
                 <div>
                     <label for="post_image" class="upload-icon">
-                        <span style="margin-left: 8px;">เลือกไฟล์รูปภาพ</span> <i class="fa fa-file-image-o" aria-hidden="true" style="font-size: 2.3rem;"></i>
+                        <span style="margin-left: 8px;">เลือกไฟล์รูปภาพ</span> <i class="bi bi-file-image" aria-hidden="true" style="font-size: 1.3rem;"></i>
                     </label>
                     <input type="file" name="post_image" id="post_image" style="display: none;" accept="image/*">
                     <input type="hidden" id="post_image_old" name="post_image_old" value="<?php echo $post_image_old; ?>">

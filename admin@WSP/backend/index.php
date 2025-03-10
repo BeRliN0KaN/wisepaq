@@ -9,22 +9,153 @@
 <main id="main" class="main">
 
     <div class="pagetitle">
-        <h1 class="fs-1 pb-1 " style="margin-left: 8rem;"> Welcome to <span style="color: #578FCA;">Dashboard</span> 
-        </h1>
+        <h1>Dashboard</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.php">Home</a></li>
+                <li class="breadcrumb-item active">Dashboard</li>
+            </ol>
+        </nav>
     </div><!-- End Page Title -->
 
     <section class="section dashboard">
         <div class="row">
+            <!-- Right side columns -->
+            <div class="col-lg-8 ">
+                <div class="card">
+                    <div class="filter">
+                        <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                            <li class="dropdown-header text-start">
+                                <h6>Filter</h6>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#" data-value="daily">Daily</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#" data-value="weekly">Weekly</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#" data-value="monthly">Monthly</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#" data-value="yearly">Yearly</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title" id="chartTitle">Website Traffic</h5>
+
+                        <!-- Bar Chart -->
+                        <div id="barChart" style="min-height: 400px;" class="echart"></div>
+
+                        <script>
+                            document.addEventListener("DOMContentLoaded", () => {
+                                const chart = echarts.init(document.querySelector("#barChart"));
+                                const currentFilterText = document.getElementById("currentFilterText");
+                                const chartTitle = document.getElementById("chartTitle"); // อ้างอิงหัวข้อกราฟ
+
+                                // 📌 ฟังก์ชันดึงข้อมูลตามช่วงเวลา
+                                function getChartData(filter) {
+                                    if (filter === "daily") {
+                                        return {
+                                            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                                            data: [270, 200, 150, 80, 70, 110, 130]
+                                        };
+                                    } else if (filter === "weekly") {
+                                        return {
+                                            labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                                            data: [1200, 1350, 1100, 1450]
+                                        };
+                                    } else if (filter === "monthly") {
+                                        return {
+                                            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                                            data: [5000, 5200, 4900, 5300, 5500, 5100]
+                                        };
+                                    } else if (filter === "yearly") {
+                                        return {
+                                            labels: ['2020', '2021', '2022', '2023', '2024'],
+                                            data: [60000, 75000, 72000, 81000, 90000]
+                                        };
+                                    }
+                                }
+
+                                // 📌 ฟังก์ชันอัปเดตกราฟ
+                                function updateChart(filter) {
+                                    const {
+                                        labels,
+                                        data
+                                    } = getChartData(filter);
+                                    const barColors = ['#FFC300', '#e64eea', '#238c33', '#e57c05', '#05abe5', '#8f34e0', '#b90000'];
+
+                                    const seriesData = data.map((value, index) => ({
+                                        value: value,
+                                        itemStyle: {
+                                            color: barColors[index % barColors.length]
+                                        }
+                                    }));
+
+                                    chart.setOption({
+                                        tooltip: {
+                                            trigger: 'axis',
+                                            axisPointer: {
+                                                type: 'shadow'
+                                            }
+                                        },
+                                        xAxis: {
+                                            type: 'category',
+                                            data: labels
+                                        },
+                                        yAxis: {
+                                            type: 'value'
+                                        },
+                                        series: [{
+                                            type: 'bar',
+                                            data: seriesData
+                                        }]
+                                    });
+
+                                    // อัปเดตข้อความแสดงช่วงเวลาปัจจุบัน
+                                    const filterText = {
+                                        daily: "Daily",
+                                        weekly: "Weekly",
+                                        monthly: "Monthly",
+                                        yearly: "Yearly"
+                                    };
+
+                                    // อัปเดตข้อความหัวข้อและข้อความแสดงช่วงเวลา
+
+                                    chartTitle.innerHTML = `Website Traffic <span class='fs-6'>| ${filterText[filter]}</span>`; // อัปเดตหัวข้อกราฟ
+                                }
+
+                                // โหลดกราฟเริ่มต้น (รายวัน)
+                                updateChart("daily");
+
+                                // เปลี่ยนข้อมูลเมื่อเลือกช่วงเวลาใน dropdown
+                                const dropdownItems = document.querySelectorAll('.dropdown-item');
+                                dropdownItems.forEach(item => {
+                                    item.addEventListener('click', (event) => {
+                                        const filterValue = event.target.getAttribute('data-value');
+                                        updateChart(filterValue);
+                                    });
+                                });
+                            });
+                        </script>
+                        <!-- End Bar Chart -->
+
+                    </div>
+                </div>
+            </div><!-- End Right side columns -->
 
             <!-- Left side columns -->
-            <div class="col-lg-10 mx-auto">
+            <div class="col-lg-4 ">
                 <div class="row">
                     <!-- Website Traffic -->
                     <div class="card">
                         <div class="card-body pb-0">
                             <h5 class="card-title">Summary </h5>
 
-                            <div id="trafficChart" style="min-height: 400px;" class="echart"></div>
+                            <div id="trafficChart" style="min-height: 420px;" class="echart"></div>
                             <?php
                             // ดึงจำนวนโพสต์ที่อยู่ในสถานะ Published
                             $query = "SELECT * FROM tbl_posts WHERE post_status='Published'";
@@ -123,135 +254,133 @@
 
                         </div>
                     </div><!-- End Website Traffic -->
-
                     <!-- Categories Post Card -->
-                    <div class="col-xxl-6 col-md-12">
-                        <div class="card info-card revenue-card">
 
-                            <div class="card-body">
-                                <h5 class="card-title">Categories Post</h5>
 
-                                <div class="d-flex align-items-center">
-                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                        <i class="bi bi-folder"></i>
+                </div><!-- End Right side columns -->
+            </div>
+            <div class="row ms-1">
+                <div class="col-xxl-6 col-md-12">
+                    <div class="card info-card revenue-card">
 
-                                    </div>
-                                    <div class="ps-3">
-                                        <?php
-                                        $query = "SELECT * FROM tbl_categories";
-                                        $select_all_categories = mysqli_query($connection, $query);
-                                        $categories_posts_count = mysqli_num_rows($select_all_categories);
-                                        ?>
-                                        <h6><?php echo $categories_posts_count ?> <span>Categories</span></h6>
-                                        <a href="categories.php">
-                                            <span class="text-muted small pt-2 ps-1">View Details</span>
-                                        </a>
-                                    </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Categories Post</h5>
+
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-folder"></i>
+
                                 </div>
-                            </div>
-
-                        </div>
-                    </div><!-- End Categories Post Card -->
-
-                    <!-- Activitys Card -->
-                    <div class="col-xxl-6 col-xl-12">
-
-                        <div class="card info-card customers-card">
-
-                            <div class="card-body">
-                                <h5 class="card-title">Activitys</h5>
-
-                                <div class="d-flex align-items-center">
-                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                        <i class="bi bi-clipboard"></i>
-
-                                    </div>
-                                    <div class="ps-3">
-                                        <?php
-                                        $query = "SELECT * FROM tbl_activity";
-                                        $select_all_activity = mysqli_query($connection, $query);
-                                        $activity_count = mysqli_num_rows($select_all_activity);
-
-                                        ?>
-                                        <h6><?php echo $activity_count; ?> <span>Activity</span></h6>
-                                        <a href="activity.php">
-                                            <span class="text-muted small pt-2 ps-1">View Details</span>
-                                        </a>
-                                    </div>
+                                <div class="ps-3">
+                                    <?php
+                                    $query = "SELECT * FROM tbl_categories";
+                                    $select_all_categories = mysqli_query($connection, $query);
+                                    $categories_posts_count = mysqli_num_rows($select_all_categories);
+                                    ?>
+                                    <h6><?php echo $categories_posts_count ?> <span>Categories</span></h6>
+                                    <a href="categories.php">
+                                        <span class="text-muted small pt-2 ps-1">View Details</span>
+                                    </a>
                                 </div>
-
                             </div>
                         </div>
 
                     </div>
-                    <!-- End Activitys Card -->
-                    <!-- Post Card -->
-                    <div class="col-xxl-6 col-md-12">
-                        <div class="card info-card revenue-card">
+                </div><!-- End Categories Post Card -->
 
-                            <div class="card-body">
-                                <h5 class="card-title">Post</h5>
+                <!-- Activitys Card -->
+                <div class="col-xxl-6 col-xl-12">
 
-                                <div class="d-flex align-items-center">
-                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                        <i class="bi bi-file-earmark-text"></i>
-                                    </div>
-                                    <div class="ps-3">
-                                        <?php
-                                        $query = "SELECT * FROM tbl_posts";
-                                        $select_all_posts = mysqli_query($connection, $query);
-                                        $posts_count = mysqli_num_rows($select_all_posts);
+                    <div class="card info-card customers-card">
 
-                                        ?>
-                                        <h6><?php echo $posts_count; ?> <span>Post</span></h6>
-                                        <a href="posts.php">
-                                            <span class="text-muted small pt-2 ps-1">View Details</span>
-                                        </a>
-                                    </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Activitys</h5>
+
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-clipboard"></i>
+
+                                </div>
+                                <div class="ps-3">
+                                    <?php
+                                    $query = "SELECT * FROM tbl_activity";
+                                    $select_all_activity = mysqli_query($connection, $query);
+                                    $activity_count = mysqli_num_rows($select_all_activity);
+
+                                    ?>
+                                    <h6><?php echo $activity_count; ?> <span>Activity</span></h6>
+                                    <a href="activity.php">
+                                        <span class="text-muted small pt-2 ps-1">View Details</span>
+                                    </a>
                                 </div>
                             </div>
 
                         </div>
-                    </div><!-- End Poste Card -->
+                    </div>
 
-                    <!-- User Card -->
-                    <div class="col-xxl-6 col-xl-12">
+                </div>
+                <!-- End Activitys Card -->
+                <!-- Post Card -->
+                <div class="col-xxl-6 col-md-12">
+                    <div class="card info-card revenue-card">
 
-                        <div class="card info-card customers-card">
+                        <div class="card-body">
+                            <h5 class="card-title">Post</h5>
 
-                            <div class="card-body">
-                                <h5 class="card-title">User</h5>
-
-                                <div class="d-flex align-items-center">
-                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                        <i class="bi bi-people"></i>
-                                    </div>
-                                    <div class="ps-3">
-                                        <?php
-                                        $query = "SELECT * FROM tbl_users";
-                                        $select_all_users = mysqli_query($connection, $query);
-                                        $users_count = mysqli_num_rows($select_all_users);
-                                        ?>
-                                        <h6><?php echo $users_count; ?> <span>Users</span></h6>
-                                        <a href="users.php">
-                                            <span class="text-muted small pt-2 ps-1">View Details</span>
-                                        </a>
-
-                                    </div>
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-file-earmark-text"></i>
                                 </div>
+                                <div class="ps-3">
+                                    <?php
+                                    $query = "SELECT * FROM tbl_posts";
+                                    $select_all_posts = mysqli_query($connection, $query);
+                                    $posts_count = mysqli_num_rows($select_all_posts);
 
+                                    ?>
+                                    <h6><?php echo $posts_count; ?> <span>Post</span></h6>
+                                    <a href="posts.php">
+                                        <span class="text-muted small pt-2 ps-1">View Details</span>
+                                    </a>
+                                </div>
                             </div>
                         </div>
 
-                    </div><!-- End User Card -->
+                    </div>
+                </div><!-- End Poste Card -->
 
+                <!-- User Card -->
+                <div class="col-xxl-6 col-xl-12">
 
+                    <div class="card info-card customers-card">
 
+                        <div class="card-body">
+                            <h5 class="card-title">User</h5>
 
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-people"></i>
+                                </div>
+                                <div class="ps-3">
+                                    <?php
+                                    $query = "SELECT * FROM tbl_users";
+                                    $select_all_users = mysqli_query($connection, $query);
+                                    $users_count = mysqli_num_rows($select_all_users);
+                                    ?>
+                                    <h6><?php echo $users_count; ?> <span>Users</span></h6>
+                                    <a href="users.php">
+                                        <span class="text-muted small pt-2 ps-1">View Details</span>
+                                    </a>
 
-                </div><!-- End Right side columns -->
+                                </div>
+                            </div>
 
+                        </div>
+                    </div>
+
+                </div><!-- End User Card -->
             </div>
+        </div>
     </section>
 
 </main><!-- End #main -->

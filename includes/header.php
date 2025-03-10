@@ -12,7 +12,19 @@ if (isset($_GET['lang'])) {
 //echo $_SESSION['lang'];
 include('lang_' . $_SESSION['lang'] . '.php');
 include "./includes/db.php";
+
+
+$user_ip = $_SERVER['REMOTE_ADDR'];
+$query = "INSERT IGNORE INTO tbl_site_visitors (ip_address) VALUES ('$user_ip')";
+mysqli_query($connection, $query);
+
+
+$result = mysqli_query($connection, "SELECT COUNT(*) as total_visitors FROM tbl_site_visitors");
+$row = mysqli_fetch_assoc($result);
+$total_visitors = $row['total_visitors'];
+
 ?>
+
 <!-- End Change lang -->
 <!DOCTYPE html>
 <html lang="en">
@@ -97,7 +109,7 @@ include "./includes/db.php";
 
   <!-- Favicons -->
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
-  <link href="img/wisepaq.jpg" rel="icon">
+  <link href="img/logo/wisepaq.jpg" rel="icon">
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">

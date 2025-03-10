@@ -2,7 +2,7 @@
 include "../backend/includes_backend/header.php";
 include "../backend/includes_backend/navigation.php";
 
-if (isset($_POST['update_profile'],$_SESSION['username'])) {
+if (isset($_POST['update_profile'], $_SESSION['username'])) {
     $the_user_name = $_SESSION['username'];
 
     $user_firstname = $_POST['firstname'];
@@ -48,16 +48,15 @@ if (isset($_POST['update_profile'],$_SESSION['username'])) {
     $query .= " WHERE user_name='$the_user_name'";
 
     $update_user_query = mysqli_query($connection, $query);
-   
+
     if (!$update_user_query) {
         die("Query Failed: " . mysqli_error($connection));
-    }
-    else{
-            $_SESSION['username'] = $user_username;
-            $_SESSION['user_image'] = $user_image;
-            $_SESSION['firstname'] = $user_firstname;
-            $_SESSION['lastname'] = $user_lastname;
-            $_SESSION['email'] = $user_email;
+    } else {
+        $_SESSION['username'] = $user_username;
+        $_SESSION['user_image'] = $user_image;
+        $_SESSION['firstname'] = $user_firstname;
+        $_SESSION['lastname'] = $user_lastname;
+        $_SESSION['email'] = $user_email;
     }
     header("Location: ../backend/users.php");
     exit();
@@ -66,7 +65,14 @@ if (isset($_POST['update_profile'],$_SESSION['username'])) {
 <main id="main" class="main">
 
     <div class="pagetitle">
-        <h1>Profile</h1>
+    <h1>Profile</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.php">Home</a></li>
+          <li class="breadcrumb-item">Users</li>
+          <li class="breadcrumb-item active">Profile</li>
+        </ol>
+      </nav>
     </div><!-- End Page Title -->
 
     <section class="section profile">
@@ -152,29 +158,29 @@ if (isset($_POST['update_profile'],$_SESSION['username'])) {
                                         </div>
 
                             </div>
-                            <?php }
-                            }else{
-                                echo "No user found";
-                            }
-                            ?>
-                            <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
-                            <?php
-                                if (isset($_SESSION['username'])) {
+                    <?php }
+                                } else {
+                                    echo "No user found";
+                                }
+                    ?>
+                    <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
+                        <?php
+                        if (isset($_SESSION['username'])) {
 
-                                    $the_user_name = $_SESSION['username'];
-                                    $query = "SELECT * FROM tbl_users WHERE user_name='$the_user_name'";
-                                    $fetch_data = mysqli_query($connection, $query);
-                                    while ($Row = mysqli_fetch_assoc($fetch_data)) {
-                                        $user_id = $Row['user_id'];
-                                        $firstname = $Row['user_firstname'];
-                                        $lastname = $Row['user_lastname'];
-                                        $username = $Row['user_name'];
-                                        $password = $Row['user_password'];
-                                        $email = $Row['user_email'];
-                                        $user_image_old = $Row['user_image'];
-                                        $user_image = $Row['user_image']; 
-                                ?>
-        <form action="" method="post" enctype="multipart/form-data" >
+                            $the_user_name = $_SESSION['username'];
+                            $query = "SELECT * FROM tbl_users WHERE user_name='$the_user_name'";
+                            $fetch_data = mysqli_query($connection, $query);
+                            while ($Row = mysqli_fetch_assoc($fetch_data)) {
+                                $user_id = $Row['user_id'];
+                                $firstname = $Row['user_firstname'];
+                                $lastname = $Row['user_lastname'];
+                                $username = $Row['user_name'];
+                                $password = $Row['user_password'];
+                                $email = $Row['user_email'];
+                                $user_image_old = $Row['user_image'];
+                                $user_image = $Row['user_image'];
+                        ?>
+                                <form action="" method="post" enctype="multipart/form-data">
                                     <div class="row mb-3">
                                         <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
                                         <div class="col-md-8 col-lg-9">
@@ -209,14 +215,14 @@ if (isset($_POST['update_profile'],$_SESSION['username'])) {
                                     <div class="row mb-3">
                                         <label for="username" class="col-md-4 col-lg-3 col-form-label">Username</label>
                                         <div class="col-md-8 col-lg-9">
-                                            <input name="username" type="text" class="form-control" id="username" value="<?php echo $username; ?>" >
+                                            <input name="username" type="text" class="form-control" id="username" value="<?php echo $username; ?>">
                                         </div>
                                     </div>
 
                                     <div class="row mb-3">
                                         <label for="firstname" class="col-md-4 col-lg-3 col-form-label">First Name</label>
                                         <div class="col-md-8 col-lg-9">
-                                        <input name="firstname" type="text" class="form-control" id="firstname" value="<?php echo $firstname; ?>">
+                                            <input name="firstname" type="text" class="form-control" id="firstname" value="<?php echo $firstname; ?>">
                                         </div>
                                     </div>
 
@@ -234,91 +240,91 @@ if (isset($_POST['update_profile'],$_SESSION['username'])) {
                                         </div>
                                     </div>
 
-                                  
+
 
                                     <div class="text-center">
-                                    <button type="submit" class="btn btn-primary" name="update_profile">Update Profile</button>
+                                        <button type="submit" class="btn btn-primary" name="update_profile">Update Profile</button>
                                     </div>
                                 </form><!-- End Profile Edit Form -->
                         <?php }
-                                 }
-                                 
-                                ?>
+                        }
+
+                        ?>
+                    </div>
+
+                    <div class="tab-pane fade pt-3" id="profile-settings">
+
+                        <!-- Settings Form -->
+                        <form>
+
+                            <div class="row mb-3">
+                                <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Email Notifications</label>
+                                <div class="col-md-8 col-lg-9">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="changesMade" checked>
+                                        <label class="form-check-label" for="changesMade">
+                                            Changes made to your account
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="newProducts" checked>
+                                        <label class="form-check-label" for="newProducts">
+                                            Information on new products and services
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="proOffers">
+                                        <label class="form-check-label" for="proOffers">
+                                            Marketing and promo offers
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="securityNotify" checked disabled>
+                                        <label class="form-check-label" for="securityNotify">
+                                            Security alerts
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
 
-                            <div class="tab-pane fade pt-3" id="profile-settings">
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                            </div>
+                        </form><!-- End settings Form -->
 
-                                <!-- Settings Form -->
-                                <form>
+                    </div>
 
-                                    <div class="row mb-3">
-                                        <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Email Notifications</label>
-                                        <div class="col-md-8 col-lg-9">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="changesMade" checked>
-                                                <label class="form-check-label" for="changesMade">
-                                                    Changes made to your account
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="newProducts" checked>
-                                                <label class="form-check-label" for="newProducts">
-                                                    Information on new products and services
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="proOffers">
-                                                <label class="form-check-label" for="proOffers">
-                                                    Marketing and promo offers
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="securityNotify" checked disabled>
-                                                <label class="form-check-label" for="securityNotify">
-                                                    Security alerts
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
+                    <div class="tab-pane fade pt-3" id="profile-change-password">
+                        <!-- Change Password Form -->
+                        <form>
 
-                                    <div class="text-center">
-                                        <button type="submit" class="btn btn-primary">Save Changes</button>
-                                    </div>
-                                </form><!-- End settings Form -->
-
+                            <div class="row mb-3">
+                                <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
+                                <div class="col-md-8 col-lg-9">
+                                    <input name="password" type="password" class="form-control" id="currentPassword">
+                                </div>
                             </div>
 
-                            <div class="tab-pane fade pt-3" id="profile-change-password">
-                                <!-- Change Password Form -->
-                                <form>
-
-                                    <div class="row mb-3">
-                                        <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
-                                        <div class="col-md-8 col-lg-9">
-                                            <input name="password" type="password" class="form-control" id="currentPassword">
-                                        </div>
-                                    </div>
-
-                                    <div class="row mb-3">
-                                        <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
-                                        <div class="col-md-8 col-lg-9">
-                                            <input name="newpassword" type="password" class="form-control" id="newPassword">
-                                        </div>
-                                    </div>
-
-                                    <div class="row mb-3">
-                                        <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
-                                        <div class="col-md-8 col-lg-9">
-                                            <input name="renewpassword" type="password" class="form-control" id="renewPassword">
-                                        </div>
-                                    </div>
-
-                                    <div class="text-center">
-                                        <button type="submit" class="btn btn-primary">Change Password</button>
-                                    </div>
-                                </form><!-- End Change Password Form -->
-
+                            <div class="row mb-3">
+                                <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
+                                <div class="col-md-8 col-lg-9">
+                                    <input name="newpassword" type="password" class="form-control" id="newPassword">
+                                </div>
                             </div>
+
+                            <div class="row mb-3">
+                                <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
+                                <div class="col-md-8 col-lg-9">
+                                    <input name="renewpassword" type="password" class="form-control" id="renewPassword">
+                                </div>
+                            </div>
+
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary">Change Password</button>
+                            </div>
+                        </form><!-- End Change Password Form -->
+
+                    </div>
 
                         </div><!-- End Bordered Tabs -->
 

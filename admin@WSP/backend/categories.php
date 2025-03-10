@@ -42,60 +42,119 @@ if (isset($_GET["delete"])) {
         echo "<script>alert('Found data in the system!Can not delete');</script>";
     }
 }
-
+$edit_mode = isset($_GET["edit"]);
 // Update Category.
-if (isset($_GET["edit"], $_POST["update_category"])) {
+if (isset($_GET["edit"])) { // ตรวจสอบว่าเป็นโหมดแก้ไข
     $cat_id = $_GET['edit'];
-    $cat_title = $_POST["cat_title"];
-    $cat_title_thai = $_POST["cat_title_thai"];
-    $cat_title_china = $_POST["cat_title_china"];
-    $cat_page = $_POST["cat_page"];
-    $query = "UPDATE tbl_categories SET cat_title='$cat_title' , cat_title_thai='$cat_title_thai' , cat_page='$cat_page',cat_title_china='$cat_title_china' WHERE cat_id=$cat_id";
-    echo $query;
-    $update_query = mysqli_query($connection, $query);
-    header("Location: categories.php");
-    if (!$update_query) {
-        die("Query Failed: " . mysqli_error($connection));
+
+    // แสดงฟอร์ม Edit Category
+    if (isset($_POST["update_category"])) {
+        // ถ้ามีการกด "Edit Category"
+        $cat_title = $_POST["cat_title"];
+        $cat_title_thai = $_POST["cat_title_thai"];
+        $cat_title_china = $_POST["cat_title_china"];
+        $cat_page = $_POST["cat_page"];
+
+        // SQL UPDATE
+        $query = "UPDATE tbl_categories SET cat_title='$cat_title', cat_title_thai='$cat_title_thai', cat_page='$cat_page', cat_title_china='$cat_title_china' WHERE cat_id=$cat_id";
+        $update_query = mysqli_query($connection, $query);
+
+        // ตรวจสอบว่า query สำเร็จไหม
+        if (!$update_query) {
+            die("Query Failed: " . mysqli_error($connection));
+        }
+
+        // Redirect ไปที่หน้า categories.php
+        header("Location: categories.php");
+        exit(); // ทำให้ script หยุดหลังจาก redirect
     }
 }
 
+
 ?>
+<script>
+    $(document).ready(function() {
+        $('#example').DataTable({
+            layout: {
+                topStart: {
+                    buttons: ['copy', 'excel', 'pdf', 'colvis']
+                }
+            },
+            columnDefs: [{
+                "orderable": false,
+                "targets": [0]
+            }]
+        });
+    });
+</script>
+<script>
+    function toggleForms() {
+        var addForm = document.getElementById("add-category-form");
+        var editForm = document.getElementById("edit-category-form");
+
+        if (editForm) {
+            addForm.style.display = "none";
+            editForm.style.display = "block";
+        }
+    }
+
+    function showAddForm() {
+        var addForm = document.getElementById("add-category-form");
+        var editForm = document.getElementById("edit-category-form");
+
+        addForm.style.display = "block";
+        if (editForm) {
+            editForm.style.display = "none";
+        }
+    }
+
+    window.onload = function() {
+        <?php if ($edit_mode) { ?>
+            toggleForms();
+        <?php } else { ?>
+            showAddForm();
+        <?php } ?>
+    };
+</script>
 
 <main id="main" class="main">
-    <div class="card">
-        <div class="card-body">
-            <!-- Page Heading -->
-            <div class="pagetitle">
-                <h1 class="fs-1 pb-1 ps-4 py-5">
-                    Welcome to <span style="color: #578FCA;">CATEGORIES</span>
-                </h1>
-            </div><!-- End Page Title -->
+    <div class="pagetitle">
+        <h1>Categories</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.php">Home</a></li>
+                <li class="breadcrumb-item active">Categories</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
             <div class="row">
                 <!-- จัดการ Add Category และ Edit Category -->
-                <div class="col-xxl-6 col-md-12">
-                    <div style="border: 2px solid gray; padding:20px;">
-                        <h3>&nbsp;Add Category</h3>
-                        <form action="" method="POST">
-                            <div class="form-group">
-                                <label for="cat_title" class="fw-bold mb-2">&nbsp;&nbsp;Category</label>
-                                <input type="text" class="form-control" name="cat_title" id="">
-                            </div>
-                            <div class="form-group mt-3">
-                                <label for="cat_title" class="fw-bold mb-2">&nbsp;&nbsp;[ภาษาไทย] Category</label>
-                                <input type="text" class="form-control" name="cat_title_thai" id="">
-                            </div>
-                            <div class="form-group mt-3">
-                                <label for="cat_title" class="fw-bold mb-2">&nbsp;&nbsp;[ภาษาจีน] Category</label>
-                                <input type="text" class="form-control" name="cat_title_china" id="">
-                            </div>
-                            <div class="form-group mt-3">
-                                <label for="cat_page" class="fw-bold mb-2">&nbsp;&nbsp;Category page</label>
-                                <input type="number" class="form-control" name="cat_page" id="">
-                            </div>
-                            <div class="form-group mt-3">
-                                <input class="btn btn-primary" type="submit" name="submit" value="  Add Category">
-                            </div>
-                        </form>
+                <div class="col-xxl-3 col-md-12">
+                    <div id="add-category-form" class="card pt-4">
+                        <div class="card-body">
+                            <h3><strong>&nbsp;Add Category</strong></h3>
+                            <form action="" method="POST">
+                                <div class="form-group">
+                                    <label for="cat_title" class="fw-bold mb-2">&nbsp;&nbsp;Category</label>
+                                    <input type="text" class="form-control" name="cat_title" id="">
+                                </div>
+                                <div class="form-group mt-3">
+                                    <label for="cat_title" class="fw-bold mb-2">&nbsp;&nbsp;[ภาษาไทย] Category</label>
+                                    <input type="text" class="form-control" name="cat_title_thai" id="">
+                                </div>
+                                <div class="form-group mt-3">
+                                    <label for="cat_title" class="fw-bold mb-2">&nbsp;&nbsp;[ภาษาจีน] Category</label>
+                                    <input type="text" class="form-control" name="cat_title_china" id="">
+                                </div>
+                                <div class="form-group mt-3">
+                                    <label for="cat_page" class="fw-bold mb-2">&nbsp;&nbsp;Category page</label>
+                                    <input type="number" class="form-control" name="cat_page" id="">
+                                </div>
+                                <div class="form-group mt-3">
+                                    <input class="btn btn-primary" type="submit" name="submit" value="  Add Category">
+                                </div>
+                            </form>
+                        </div>
                     </div>
 
                     <!-- ฟอร์ม Edit Category -->
@@ -113,30 +172,32 @@ if (isset($_GET["edit"], $_POST["update_category"])) {
                                 $cat_page = $Row["cat_page"];
                                 if (isset($cat_title)) {
                         ?>
-                                    <div style="border: 2px solid gray; padding:20px;">
-                                        <h3>&nbsp;Edit Category</h3>
-                                        <div class="form-group ">
-                                            <label for="cat_title" class="fw-bold mb-2">&nbsp;&nbsp;Category</label>
-                                            <input type="text" value="<?php echo $cat_title; ?>" class="form-control" name="cat_title" id="">
-                                        </div>
+                                    <div id="edit-category-form" class="card pt-4">
+                                        <div class="card-body">
+                                            <h3><strong>&nbsp;Edit Category</strong></h3>
+                                            <div class="form-group ">
+                                                <label for="cat_title" class="fw-bold mb-2">&nbsp;&nbsp;Category</label>
+                                                <input type="text" value="<?php echo $cat_title; ?>" class="form-control" name="cat_title" id="">
+                                            </div>
 
-                                        <div class="form-group mt-3">
-                                            <label for="cat_title_thai" class="fw-bold mb-2">&nbsp;&nbsp;[ภาษาไทย] Category</label>
-                                            <input type="text" value="<?php echo $cat_title_thai; ?>" class="form-control" name="cat_title_thai" id="">
-                                        </div>
+                                            <div class="form-group mt-3">
+                                                <label for="cat_title_thai" class="fw-bold mb-2">&nbsp;&nbsp;[ภาษาไทย] Category</label>
+                                                <input type="text" value="<?php echo $cat_title_thai; ?>" class="form-control" name="cat_title_thai" id="">
+                                            </div>
 
-                                        <div class="form-group mt-3">
-                                            <label for="cat_title_thai" class="fw-bold mb-2">&nbsp;&nbsp;[ภาษาจีน] Category</label>
-                                            <input type="text" value="<?php echo $cat_title_china; ?>" class="form-control" name="cat_title_china" id="">
-                                        </div>
+                                            <div class="form-group mt-3">
+                                                <label for="cat_title_thai" class="fw-bold mb-2">&nbsp;&nbsp;[ภาษาจีน] Category</label>
+                                                <input type="text" value="<?php echo $cat_title_china; ?>" class="form-control" name="cat_title_china" id="">
+                                            </div>
 
-                                        <div class="form-group mt-3">
-                                            <label for="cat_page" class="fw-bold mb-2">&nbsp;&nbsp; Category Page</label>
-                                            <input type="number" value="<?php echo $cat_page; ?>" class="form-control" name="cat_page" id="">
-                                        </div>
+                                            <div class="form-group mt-3">
+                                                <label for="cat_page" class="fw-bold mb-2">&nbsp;&nbsp; Category Page</label>
+                                                <input type="number" value="<?php echo $cat_page; ?>" class="form-control" name="cat_page" id="">
+                                            </div>
 
-                                        <div class="form-group mt-3">
-                                            <input class="btn btn-primary" type="submit" name="update_category" value="Edit Category">
+                                            <div class="form-group mt-3">
+                                                <input class="btn btn-primary" type="submit" name="update_category" value="Edit Category">
+                                            </div>
                                         </div>
                                     </div>
                         <?php };
@@ -149,24 +210,26 @@ if (isset($_GET["edit"], $_POST["update_category"])) {
                 </div>
 
                 <!-- จัดตาราง ID ทางขวา -->
-                <div class="col-xxl-6 col-md-12" style="display: flex; justify-content: flex-end;">
-                    <table class="table table-bordered table-hover">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Category</th>
-                                <th>[ภาษาไทย] Category</th>
-                                <th>[ภาษาจีน] Category</th>
-                                <th>Category Page</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            $query = "SELECT * FROM tbl_categories";;
-                            $fetch_data = mysqli_query($connection, $query);
-                            while ($Row = mysqli_fetch_assoc($fetch_data)) {
-                                echo "<tr>
+                        <div class="col-xxl-9 col-md-12" >
+                        <div class="card pt-5">
+                        <div class="card-body">
+                            <table id="example" class="display" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Category</th>
+                                        <th>[ภาษาไทย] Category</th>
+                                        <th>[ภาษาจีน] Category</th>
+                                        <th>Category Page</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    $query = "SELECT * FROM tbl_categories";;
+                                    $fetch_data = mysqli_query($connection, $query);
+                                    while ($Row = mysqli_fetch_assoc($fetch_data)) {
+                                        echo "<tr>
                                     <td>{$Row['cat_id']}</td>
                                     <td>{$Row['cat_title']}</td>
                                     <td>{$Row['cat_title_thai']}</td>
@@ -177,13 +240,13 @@ if (isset($_GET["edit"], $_POST["update_category"])) {
                                         <a onClick=\"javascript: return confirm('Please confirm deletion');\"href='categories.php?delete={$Row['cat_id']}'><i class='bi bi-trash' aria-hidden='true'></i></a>
                                     </td>
                                 </tr>";
-                            }
-                            ?>
-                        </tbody>
-                    </table>
+                                    }
+                                    ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
 </main>
 <?php include "includes_backend/footer.php" ?>
