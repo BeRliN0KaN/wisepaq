@@ -28,6 +28,7 @@ if (isset($_POST['login'])) {
                 $user_firstname = $Row['user_firstname'];
                 $user_lastname = $Row['user_lastname'];
                 $user_password = $Row['user_password'];
+                $user_image = $Row['user_image'];
 
             }       
 
@@ -35,6 +36,7 @@ if (isset($_POST['login'])) {
                         $_SESSION['username'] = $user_name;
                         $_SESSION['firstname'] = $user_firstname;
                         $_SESSION['lastname'] = $user_lastname;
+                        $_SESSION['user_image'] =  $user_image;
                         header("Location: ../backend/index.php");
                 }else{
                          echo "<script>alert('User Or Password not correct!!');window.history.go(-1);</script>"; 

@@ -4,7 +4,7 @@ include "includes_backend/navigation.php";
 ?>
 
 <main id="main" class="main">
-    <div class="card" style="height:40rem;">
+    <div class="card" style="height:auto;">
         <div class="card-body">
         <div class="pagetitle">
         <h1 class="fs-1 pb-1 ps-4 py-5">

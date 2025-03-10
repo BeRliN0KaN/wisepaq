@@ -94,7 +94,7 @@ if (isset($_GET['p_id'])) {
                 <label for="activity_image" class="d-block ms-3 fw-bold ms-3">Activity Image</label>
                 <div>
                     <label  for="activity_image" class="upload-icon">
-                        <span style="margin-left: 8px ;">เลือกไฟล์รูปภาพ</span> <i class="fa fa-file-image-o" aria-hidden="true" style="font-size: 2.3rem;"></i>
+                        <span style="margin-left: 8px ;">เลือกไฟล์รูปภาพ</span> <i class="bi bi-file-image" aria-hidden="true" style="font-size: 1.3rem;"></i>
                     </label>
                     <input type="file" name="activity_image" id="activity_image" style="display: none;" accept="image/*">
                     <input type="hidden" id="activity_image_old" name="activity_image_old" value="<?php echo $activity_image_old; ?>">

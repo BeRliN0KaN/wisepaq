@@ -2,9 +2,9 @@
 ob_start();
 include '../../includes/db.php';
 session_start();
-// if (!isset($_SESSION['username'])) {
-//   header("Location: ../index.php");
-// }
+if (!isset($_SESSION['username'])) {
+  header("Location: ../index.php");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -94,15 +94,18 @@ session_start();
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0 " href="#" data-bs-toggle="dropdown">
-            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center" style="background-color: #f0f0f0; width: 30px; height: 30px;">
-              <i class="bi bi-person" style="font-size: 20px;"></i>
+            <div >
+              <?php
+               echo "<img src='../profile/{$_SESSION['user_image']}' alt='' class='rounded-circle' style='width: 40px; height:50px;'>"
+               ?>
+            <!-- <i class="bi bi-person" style="font-size: 20px;"></i> -->
             </div>
             <span class="d-none d-md-block dropdown-toggle p-2 pe-4"><?php echo $_SESSION['username'] ?> </span>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6><?php echo $_SESSION['username'] ?></h6>
+              <h6><?php echo $_SESSION['firstname']." ".$_SESSION['lastname'] ?></h6>
               <span>Web Designer</span>
             </li>
             <li>

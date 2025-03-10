@@ -27,6 +27,7 @@ if (isset($_GET["delete"])) {
     <thead >
         <tr >
             <th class="text-center">ID</th>
+            <th class="text-center">Image</th>
             <th class="text-center">Username</th>
             <th class="text-center">Firstname</th>
             <th class="text-center">Lastname</th>
@@ -41,6 +42,7 @@ if (isset($_GET["delete"])) {
         while ($Row = mysqli_fetch_assoc($fetch_posts_data)) {
 
             $user_id = $Row['user_id'];
+            $user_image = $Row['user_image'];
             $user_name = $Row['user_name'];
             $user_firstname = $Row['user_firstname'];
             $user_lastname = $Row['user_lastname'];
@@ -52,6 +54,7 @@ if (isset($_GET["delete"])) {
                     <td>$user_firstname</td>
                     <td>$user_lastname</td>
                     <td>$user_email</td>
+                    <td><img src='../profile/{$user_image}' width='150px' height='auto' style='object-fit: contain; text-align:center; '></td>
                     <td class='text-center'>
                             <a href='users.php?source=edit_user&user_id=$user_id'><i class='bi bi-pencil-square' aria-hidden='true'></i></a> </a> |
                             <a onClick=\"javascript: return confirm('Are you sure you want to delete'); \" href='users.php?delete=$user_id'><i class='bi bi-trash' aria-hidden='true'></i></a>

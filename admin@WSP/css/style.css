@@ -1237,12 +1237,12 @@ h6 {
   cursor: pointer;
 }
 .upload-icon i, .upload-icon span {
-  color: #0b76e8; 
+  color: #0852a1; 
   transition: color 0.3s ease;
 }
 
 .upload-icon:hover i, .upload-icon:hover span {
-  color: #ff5733; /* สีใหม่เมื่อ hover */
+  color: #0b76e8; /* สีใหม่เมื่อ hover */
 }
 
 
@@ -1252,7 +1252,7 @@ h6 {
   display: none;  /* ทำให้ภาพแสดงเสมอ */
   border: 1px solid #ddd; 
   padding: 5px; 
-  border-radius: 5px;
+  border:0;
   object-fit: contain;  /* ปรับอัตราส่วนของรูปภาพให้เต็มพื้นที่โดยไม่บิดเบี้ยว */
 }
 
