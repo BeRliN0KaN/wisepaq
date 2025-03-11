@@ -14,10 +14,27 @@ include('lang_' . $_SESSION['lang'] . '.php');
 include "./includes/db.php";
 
 
-$user_ip = $_SERVER['REMOTE_ADDR'];
-$query = "INSERT IGNORE INTO tbl_site_visitors (ip_address) VALUES ('$user_ip')";
-mysqli_query($connection, $query);
+function getDeviceType($user_agent) {
+  // เช็คว่าผู้ใช้เข้ามาจากโทรศัพท์มือถือ
+  if (preg_match('/mobile/i', $user_agent)) {
+      return 'Mobile';
+  }
+  elseif (preg_match('/tablet|iPad/i', $user_agent)) {
+    return 'Tablet';
+  }
+  // เช็คว่าเป็นคอมพิวเตอร์ (Desktop)
+  else {
+      return 'Desktop';
+  }
+}
 
+$user_agent = $_SERVER['HTTP_USER_AGENT'];
+$ip_address = $_SERVER['REMOTE_ADDR'];
+$device_type = getDeviceType($user_agent);
+
+// ใช้ตัวแปร $sql ในการเก็บคำสั่ง SQL
+$sql = "INSERT IGNORE INTO tbl_site_visitors (ip_address, device_type) VALUES ('$ip_address', '$device_type')";
+$result = mysqli_query($connection,$sql);
 
 $result = mysqli_query($connection, "SELECT COUNT(*) as total_visitors FROM tbl_site_visitors");
 $row = mysqli_fetch_assoc($result);

@@ -25,18 +25,6 @@ if (isset($_POST['update_profile'], $_SESSION['username'])) {
         $user_image = $user_image_old;
     }
 
-    // $password = md5($user_password);
-    // $sql = "SELECT user_password FROM tbl_users WHERE user_name = '$the_user_name'";
-    // $result = mysqli_query($connection, $sql);
-    // $row = mysqli_fetch_assoc($result);
-    // $storedHash = $row['user_password'];
-    // if (!empty($user_password)) {
-    //     $password = password_hash($user_password, PASSWORD_DEFAULT);
-    // } else {
-    //     $password = $storedHash;
-    // }
-
-
     // Update a User.
     $query = "UPDATE tbl_users SET ";
     $query .= "user_firstname='$user_firstname', ";
@@ -58,23 +46,84 @@ if (isset($_POST['update_profile'], $_SESSION['username'])) {
         $_SESSION['lastname'] = $user_lastname;
         $_SESSION['email'] = $user_email;
     }
-    header("Location: ../backend/users.php");
+    header("Location: ../backend/profile.php");
     exit();
 }
+//Change Password
+$messages = [];
+if (isset($_POST['change_password'], $_SESSION['username'])) {
+    if (!empty($_POST['currentpassword']) && !empty($_POST['newpassword']) && !empty($_POST['renewpassword'])) {
+        $the_user_name = $_SESSION['username'];
+        $cur_pass = $_POST['currentpassword'];
+        $new_pass = $_POST['newpassword'];
+        $renew_pass = $_POST['renewpassword'];
+
+        $sql = "SELECT user_password FROM tbl_users WHERE user_name = '$the_user_name'";
+        $result = mysqli_query($connection, $sql);
+        $row = mysqli_fetch_assoc($result);
+        $data_pass = $row['user_password'];
+
+        if (password_verify($cur_pass, $data_pass)) {
+            if ($new_pass == $renew_pass) {
+                $password = password_hash($new_pass, PASSWORD_DEFAULT);
+
+                // Update User
+                $query = "UPDATE tbl_users SET user_password='$password' WHERE user_name='$the_user_name'";
+                $update_user_query = mysqli_query($connection, $query);
+
+                if ($update_user_query) {
+                    $_SESSION['messages'][] = "<p class='alert alert-success'>✅ Password changed successfully</p>";
+                } else {
+                    $_SESSION['messages'][] = "<p class='alert alert-danger'>❌ Error updating password</p>";
+                }
+            } else {
+                $_SESSION['messages'][] = "<p class='alert alert-danger'>⚠️ Passwords do not match</p>";
+            }
+        } else {
+            $_SESSION['messages'][] = "<p class='alert alert-danger'>❌ Current password is incorrect</p>";
+        }
+    } else {
+        $_SESSION['messages'][] = "<p class='alert alert-danger'>⚠️ Please fill all fields</p>";
+    }
+    header("Location: ../backend/profile.php");
+    exit();
+}
+
+//Delete Account
+// Delete User.
+if (isset($_POST["delete"], $_SESSION['username'])) {
+    $the_user_name = $_SESSION['username'];
+    $query = "DELETE FROM tbl_users WHERE user_name='$the_user_name'";;
+    $delete_query = mysqli_query($connection, $query);
+    header("Location: ../index.php");
+    if (!$delete_query) {
+        die("Query Failed: " . mysqli_error($connection));
+    } else {
+        session_destroy();
+    }
+}
+
 ?>
 <main id="main" class="main">
 
     <div class="pagetitle">
-    <h1>Profile</h1>
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-          <li class="breadcrumb-item">Users</li>
-          <li class="breadcrumb-item active">Profile</li>
-        </ol>
-      </nav>
+        <h1>Profile</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.php">Home</a></li>
+                <li class="breadcrumb-item">Users</li>
+                <li class="breadcrumb-item active">Profile</li>
+            </ol>
+        </nav>
     </div><!-- End Page Title -->
-
+    <?php
+    if (isset($_SESSION['messages']) && is_array($_SESSION['messages'])) {
+        foreach ($_SESSION['messages'] as $msg) {
+            echo $msg; // แสดงทุกข้อความที่อยู่ใน session
+        }
+        unset($_SESSION['messages']); // ล้าง session หลังแสดงผล
+    }
+    ?>
     <section class="section profile">
         <div class="row">
             <div class="col-xl-4">
@@ -82,9 +131,10 @@ if (isset($_POST['update_profile'], $_SESSION['username'])) {
                 <div class="card">
                     <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
                         <?php
-                        echo "<img src='../profile/{$_SESSION['user_image']}' alt='Profile' class='rounded-circle'>
-                <h2>{$_SESSION['username']}</h2>";
+                        echo "<img src='../profile/{$_SESSION['user_image']}' alt='Profile' class='rounded-circle' style='width: 100px; height: 100px; object-fit: cover; border-radius: 50%;'>
+<h2>{$_SESSION['username']}</h2>";
                         ?>
+
                         <h3>Web Designer</h3>
                         <div class="social-links mt-2">
                             <a href="#" class="linkedin"><i class="bi bi-display"></i></a>
@@ -156,6 +206,11 @@ if (isset($_POST['update_profile'], $_SESSION['username'])) {
                                             <div class="col-lg-3 col-md-4 label">Email</div>
                                             <div class="col-lg-9 col-md-8"><?php echo $email; ?></div>
                                         </div>
+                                        <form action="" method="post">
+                                            <div class="d-flex justify-content-end ">
+                                                <input type="submit" class="btn btn-danger mb-2 w-auto" style="width:6rem;" name="delete" value="Delete Account" onClick="javascript: return confirm('Are you sure you want to delete');">
+                                            </div>
+                                        </form>
 
                             </div>
                     <?php }
@@ -252,56 +307,14 @@ if (isset($_POST['update_profile'], $_SESSION['username'])) {
                         ?>
                     </div>
 
-                    <div class="tab-pane fade pt-3" id="profile-settings">
-
-                        <!-- Settings Form -->
-                        <form>
-
-                            <div class="row mb-3">
-                                <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Email Notifications</label>
-                                <div class="col-md-8 col-lg-9">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="changesMade" checked>
-                                        <label class="form-check-label" for="changesMade">
-                                            Changes made to your account
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="newProducts" checked>
-                                        <label class="form-check-label" for="newProducts">
-                                            Information on new products and services
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="proOffers">
-                                        <label class="form-check-label" for="proOffers">
-                                            Marketing and promo offers
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="securityNotify" checked disabled>
-                                        <label class="form-check-label" for="securityNotify">
-                                            Security alerts
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="text-center">
-                                <button type="submit" class="btn btn-primary">Save Changes</button>
-                            </div>
-                        </form><!-- End settings Form -->
-
-                    </div>
-
                     <div class="tab-pane fade pt-3" id="profile-change-password">
                         <!-- Change Password Form -->
-                        <form>
+                        <form action="" method="post">
 
                             <div class="row mb-3">
                                 <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
                                 <div class="col-md-8 col-lg-9">
-                                    <input name="password" type="password" class="form-control" id="currentPassword">
+                                    <input name="currentpassword" type="password" class="form-control" id="currentPassword">
                                 </div>
                             </div>
 
@@ -320,7 +333,7 @@ if (isset($_POST['update_profile'], $_SESSION['username'])) {
                             </div>
 
                             <div class="text-center">
-                                <button type="submit" class="btn btn-primary">Change Password</button>
+                                <button type="submit" class="btn btn-primary" name="change_password">Change Password</button>
                             </div>
                         </form><!-- End Change Password Form -->
 

@@ -89,7 +89,7 @@ if (isset($_POST["delete"])) {
                     </thead>
                     <tbody>
                         <?php
-                        $query = "SELECT * FROM tbl_users";
+                        $query = "SELECT * FROM tbl_users WHERE user_name != '" . mysqli_real_escape_string($connection, $_SESSION['username']) . "'";
                         $fetch_posts_data = mysqli_query($connection, $query);
                         while ($Row = mysqli_fetch_assoc($fetch_posts_data)) {
 

@@ -2,9 +2,9 @@
 ob_start();
 include '../../includes/db.php';
 session_start();
-if (!isset($_SESSION['username'])) {
-  header("Location: ../index.php");
-}
+// if (!isset($_SESSION['username'])) {
+//   header("Location: ../index.php");
+// }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -96,7 +96,7 @@ if (!isset($_SESSION['username'])) {
           <a class="nav-link nav-profile d-flex align-items-center pe-0 " href="#" data-bs-toggle="dropdown">
             <div >
               <?php
-               echo "<img src='../profile/{$_SESSION['user_image']}' alt='' class='rounded-circle' style='width: 40px; height:50px;'>"
+               echo "<img src='../profile/{$_SESSION['user_image']}' alt='' class='rounded-circle' style='width: 40px; height:50px;object-fit: cover;'>"
                ?>
             <!-- <i class="bi bi-person" style="font-size: 20px;"></i> -->
             </div>
