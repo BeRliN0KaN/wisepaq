@@ -7,20 +7,19 @@ $(document).ready(function(){
             }
         },
         columnDefs: [
-            { "orderable": false, "targets": [0,7] } 
+            { "orderable": false, "targets": [0,4,6] } 
         ]
     });
 });
 </script>
-
-
 <?php
-// Delete Post.
+// Delete Activity.
 if (isset($_GET["deleteActivity"])) {
     $activity_id = $_GET['deleteActivity'];
     $activity_image = $_GET['image'];
     $query = "DELETE FROM tbl_activity WHERE activity_id=$activity_id";
     $delete_query = mysqli_query($connection, $query);
+    unlink('../activity/' . $activity_image);
     header("Location: activity.php");
     if (!$delete_query) {
         die("Query Failed: " . mysqli_error($connection));
@@ -44,22 +43,6 @@ if (isset($_POST["apply"])) {
                     $query = "UPDATE tbl_activity SET activity_status = '$bulk_option' WHERE activity_id=$checkBoxValue";
                     $update_activity = mysqli_query($connection, $query);
                     echo "<p class='alert alert-success'>Activity draftted successfully.</p>";
-                    if (!$update_activity) {
-                        die("Query Failed: " . mysqli_error($connection));
-                    }
-                    break;
-                case 'Important':
-                    $query = "UPDATE tbl_activity SET activity_pin = '1' WHERE activity_id=$checkBoxValue";
-                    $update_activity = mysqli_query($connection, $query);
-                    echo "<p class='alert alert-success'>Activity important successfully.</p>";
-                    if (!$update_activity) {
-                        die("Query Failed: " . mysqli_error($connection));
-                    }
-                    break;
-                case 'Unimportant':
-                    $query = "UPDATE tbl_activity SET activity_pin = '0' WHERE activity_id=$checkBoxValue";
-                    $update_activity = mysqli_query($connection, $query);
-                    echo "<p class='alert alert-success'>Activity unimportant successfully.</p>";
                     if (!$update_activity) {
                         die("Query Failed: " . mysqli_error($connection));
                     }
@@ -91,8 +74,6 @@ if (isset($_POST["apply"])) {
                     <option value="">Select Options</option>
                     <option value="Published">Publish</option>
                     <option value="Draft">Draft</option>
-                    <option value="Important">Important</option>
-                    <option value="Unimportant">Unimportant</option>
                     <option value="Delete">Delete</option>
                 </select>
             </div>
@@ -106,10 +87,7 @@ if (isset($_POST["apply"])) {
                 <th><input type='checkbox' id='selectAllBoxes' onclick="selectAll(this)"></th>
                 <th style="width:40px;">ID </th>
                 <th style="width: 300px;">Title[EN] / Title[TH] / Title[CN]</th>
-                <!-- <th style="width: 150px;">[ภาษาไทย] Title</th> -->
-                <!-- <th style="width: 150px;">[ภาษาไทย] Category</th> -->
                 <th>Status </th>
-                <th style="width:48px ;">Pin </th>
                 <th style="width:100px">Image</th>
                 <th>Date</th>
                 <th style="width:80px">Action</th>
@@ -122,7 +100,6 @@ if (isset($_POST["apply"])) {
             while ($Row = mysqli_fetch_assoc($fetch_activity_data)) {
                 $the_activity_id = $Row['activity_id'];
                 $the_activity_image = $Row['activity_image'];
-                $the_activity_pin = $Row['activity_pin'];
                 $the_activity_title = base64_decode($Row['activity_title']);
                 $the_activity_title_thai = base64_decode($Row['activity_title_thai']);
                 $the_activity_title_china = base64_decode($Row['activity_title_china']);             
@@ -139,15 +116,8 @@ if (isset($_POST["apply"])) {
                  $date = new DateTime($date_data ); 
                  $date_DMY = $date->format('d/m/Y');
 
-                echo "<td>{$Row['activity_status']}</td>";
-
-                if ($the_activity_pin === "1") {
-                    echo "<td><img src='../images/pin.png' alt='image'  width='20px' height='20px'></td>";
-                } else {
-                    echo "<td></td>";
-                }
-
-                echo "<td><img src='../activity/{$Row['activity_image']}' alt='image' width='150px' height='65px' style='object-fit: cover; text-align:center;'></td>
+                echo "<td>{$Row['activity_status']}</td>
+                     <td><img src='../activity/{$Row['activity_image']}' alt='image' width='150px' height='65px' style='object-fit: cover; text-align:center;'></td>
                     <td>{$date_DMY}</td>
                     <td class='text-center'>
                         <a href='activity.php?source=edit_activity&p_id=$the_activity_id'><i class='bi bi-pencil-square ' aria-hidden='true'></i></a> | 

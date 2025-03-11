@@ -20,8 +20,8 @@
 
     <section class="section dashboard">
         <div class="row">
-                <!-- Left side columns -->
-                <div class="col-lg-8 ">
+            <!-- Left side columns -->
+            <div class="col-lg-8 ">
                 <div class="row">
                     <!-- Website Traffic -->
                     <div class="card">
@@ -141,6 +141,11 @@
                         <!-- Bar Chart -->
                         <div id="barChart" style=" height: 400px;"></div>
 
+                        <?php
+                        $result = mysqli_query($connection, "SELECT COUNT(*) as total_visitors FROM tbl_site_visitors");
+                        $row = mysqli_fetch_assoc($result);
+                        $total_visitors = $row['total_visitors'];
+                        ?>
                         <script>
                             document.addEventListener("DOMContentLoaded", function() {
                                 let chart = echarts.init(document.getElementById("barChart"));
@@ -158,6 +163,15 @@
 
                                         // กำหนด options สำหรับกราฟ
                                         chart.setOption({
+                                            title: {
+                                                text: "Total number of website visitors: <?php echo $total_visitors; ?>",
+                                                textStyle: {
+                                                    
+                                                    fontSize: 14, // ปรับขนาดฟอนต์ (เช่น ขนาด 14px)
+                                                    fontWeight: 'normal', // ปรับน้ำหนักฟอนต์ให้เป็นปกติ
+                                                    color: '#333' // กำหนดสีของข้อความ
+                                                }
+                                            },
                                             tooltip: {
                                                 trigger: "axis"
                                             },

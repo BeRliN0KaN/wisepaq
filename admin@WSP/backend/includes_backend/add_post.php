@@ -10,7 +10,6 @@ if (isset($_POST['create_post'])) {
     $post_link_url = $_POST['link_url'];
     $post_category_id = $_POST['post_category'];
     $post_status = $_POST['post_status'];
-    $post_pin = $_POST['post_pin'];
 
     $path = $_FILES['post_image']['name'];
     $ext = pathinfo($path, PATHINFO_EXTENSION);
@@ -26,8 +25,8 @@ if (isset($_POST['create_post'])) {
     move_uploaded_file($post_image_temp, "../images/$post_image");
 
     // Add new Post.
-    $query = "INSERT INTO tbl_posts(post_category_id, post_title, post_title_thai,post_title_china, post_date, post_image, post_content, post_content_thai, post_status,post_subtitle,post_subtitle_thai,post_subtitle_china,post_link,post_pin,post_content_china) ";
-    $query .= "VALUES({$post_category_id}, '{$post_title}', '{$post_title_thai}','{$post_title_china}', '{$post_date}', '{$post_image}', '{$post_content}', '{$post_content_thai}',  '{$post_status}','{$post_subtitle}','{$post_subtitle_thai}','{$post_subtitle_china}','{$post_link_url}','{$post_pin}','{$post_content_china}')";
+    $query = "INSERT INTO tbl_posts(post_category_id, post_title, post_title_thai,post_title_china, post_date, post_image, post_content, post_content_thai, post_status,post_subtitle,post_subtitle_thai,post_subtitle_china,post_link,post_content_china) ";
+    $query .= "VALUES({$post_category_id}, '{$post_title}', '{$post_title_thai}','{$post_title_china}', '{$post_date}', '{$post_image}', '{$post_content}', '{$post_content_thai}',  '{$post_status}','{$post_subtitle}','{$post_subtitle_thai}','{$post_subtitle_china}','{$post_link_url}','{$post_content_china}')";
     $create_post_query = mysqli_query($connection, $query);
     $the_post_id = mysqli_insert_id($connection);
     if (!$create_post_query) {
@@ -69,7 +68,7 @@ if (isset($_POST['create_post'])) {
         });
     </script>
 
-    <div class="form-group col-lg-12">
+    <div class="form-group col-lg-4">
         <label for="link" class="ms-3 fw-bold">Link Url</label>
         <input type="text" class="form-control mt-2" name="link_url">
     </div>
@@ -97,14 +96,6 @@ if (isset($_POST['create_post'])) {
             <option value='Draft'>Select Option</option>
             <option value='Published'>Published</option>
             <option value='Draft'>Draft</option>
-        </select>
-    </div>
-    <div class="form-group col-lg-4">
-        <label  class="ms-3 fw-bold" for="post_pin">Post Pin</label>
-        <select class="form-control mt-2" name="post_pin" id="post_pin">
-            <option value='0'>Select Option</option>
-            <option value='1'>Important</option>
-            <option value='0'>Unimportant</option>
         </select>
     </div>
 

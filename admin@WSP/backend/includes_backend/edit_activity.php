@@ -10,7 +10,6 @@ if (isset($_POST['update_post'], $_GET['p_id'])) {
     $activity_subtitle_china = base64_encode($_POST['subtitle_china']); 
     $activity_link_url = $_POST['link_url'];
     $activity_status = $_POST['activity_status'];
-    $activity_pin = $_POST['activity_pin'];
 
     $activity_content = base64_encode($_POST['activity_content']);
     $activity_content_thai = base64_encode($_POST['activity_content_thai']);
@@ -40,7 +39,6 @@ if (isset($_POST['update_post'], $_GET['p_id'])) {
     $query .= "activity_subtitle_thai='$activity_subtitle_thai', ";
     $query .= "activity_subtitle_china='$activity_subtitle_china', ";   
     $query .= "activity_link='$activity_link_url', ";
-    $query .= "activity_pin='$activity_pin', ";
     $query .= "activity_date='$activity_date', ";
     $query .= !empty($activity_image) ? "activity_image='$activity_image', " : null;
     $query .= "activity_content='$activity_content', ";
@@ -75,7 +73,6 @@ if (isset($_GET['p_id'])) {
         $activity_subtitle_china = base64_decode($Row['activity_subtitle_china']);      
         $activity_link_url = $Row['activity_link'];
         $activity_status = $Row['activity_status'];
-        $activity_pin = $Row['activity_pin'];
         $activity_image_old = $Row['activity_image'];
         $activity_image = $Row['activity_image'];
         $activity_date = $Row['activity_date'];
@@ -84,12 +81,6 @@ if (isset($_GET['p_id'])) {
         $activity_content_china = base64_decode($Row['activity_content_china']);
         ?>
         <form action="" method="post" enctype="multipart/form-data" class="row g-3">
-            <!--                        <div class="form-group">
-                                        <img src='../images/<?php echo $activity_image ?>' alt='image' width='100px'>
-                                        <input type="file" name="activity_image">
-                                        <input type="hidden" id="activity_image_old" name=activity_image_old" value="<?php echo $activity_image_old; ?>">
-                                    </div>-->
-            <!--x-->
             <div class="form-group col-lg-12">
                 <label for="activity_image" class="d-block ms-3 fw-bold ms-3">Activity Image</label>
                 <div>
@@ -119,11 +110,11 @@ if (isset($_GET['p_id'])) {
                     }
                 });
             </script>
-            <div class="form-group col-lg-12">
+            <div class="form-group col-lg-6">
                 <label class=" fw-bold ms-3" for="link" >Link Url</label>
                 <input type="text" class="form-control  mt-2" value="<?php echo $activity_link_url ?>" name="link_url">
             </div>
-            <div class="form-group col-lg-4">
+            <div class="form-group col-lg-6">
                 <label class="fw-bold ms-3" for="activity_status">Activity Status</label>
                 <select class="form-control  mt-2" name="activity_status" id="activity_category">
                     <option value='<?php echo $activity_status; ?>'><?php echo $activity_status; ?></option>
@@ -131,17 +122,6 @@ if (isset($_GET['p_id'])) {
                         <option value='Draft'>Draft</option>
                     <?php } else { ?>
                         <option value='Published'>Published</option>
-                    <?php } ?>
-                </select>
-            </div>
-            <div class="form-group col-lg-4">
-                <label for="activity_pin " class="fw-bold ms-3">Activity Pin</label>
-                <select class="form-control mt-2" name="activity_pin" id="activity_category">
-                    <option value='<?php echo $activity_pin; ?>'><?php echo ($activity_pin === "1") ? "Important" : "Unimportant"; ?></option>
-                    <?php if ($activity_pin === "1") { ?>
-                        <option value='0'>Unimportant</option>
-                    <?php } else { ?>
-                        <option value='1'>Important</option>
                     <?php } ?>
                 </select>
             </div>

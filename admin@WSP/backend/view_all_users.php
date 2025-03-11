@@ -12,7 +12,7 @@ include "includes_backend/navigation.php";
             },
             columnDefs: [{
                 "orderable": false,
-                "targets": [0, 7]
+                "targets": [0,6,7]
             }]
         });
     });
@@ -100,6 +100,12 @@ if (isset($_POST["delete"])) {
                             $user_lastname = $Row['user_lastname'];
                             $user_email = $Row['user_email'];
 
+                        if($user_image == "default.jpg"){
+                            $user_image = "<img src='../../img/img-icon/123.webp' width='150px' height='auto' style='object-fit: contain; text-align:center; '>";
+                        }else{
+                            $user_image = "<img src='../profile/{$user_image}' width='150px' height='auto' style='object-fit: contain; text-align:center; '>";
+                        }
+                        
                             echo "<tr>
                     <td><input type='checkbox' name='checkBoxArray[]' value='{$user_id}'></td>
                     <td>$user_id</td>
@@ -107,7 +113,7 @@ if (isset($_POST["delete"])) {
                     <td>$user_firstname</td>
                     <td>$user_lastname</td>
                     <td>$user_email</td>
-                    <td><img src='../profile/{$user_image}' width='150px' height='auto' style='object-fit: contain; text-align:center; '></td>
+                    <td>$user_image</td>
                     <td class='text-center'>
                             <a href='users.php?source=edit_user&user_id=$user_id'><i class='bi bi-pencil-square' aria-hidden='true'></i></a> </a> |
                             <a onClick=\"javascript: return confirm('Are you sure you want to delete'); \" href='users.php?delete=$user_id'><i class='bi bi-trash' aria-hidden='true'></i></a>
@@ -123,3 +129,4 @@ if (isset($_POST["delete"])) {
 </main>
 
 <?php include "includes_backend/footer.php" ?>
+

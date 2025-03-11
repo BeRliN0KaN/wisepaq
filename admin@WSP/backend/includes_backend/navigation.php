@@ -59,6 +59,7 @@
       </li>
     </ul>
   </li><!-- End Components Nav -->
+  <?php if($_SESSION['user_role']=="admin"){?>
   <li class="nav-item">
     <a class="nav-link collapsed" data-bs-target="#user-nav" data-bs-toggle="collapse" href="#">
       <i class="bi bi-people"></i><span>Users</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -76,6 +77,7 @@
       </li>
     </ul>
   </li><!-- End Components Nav -->
+  <?php }?>
 
 </ul>
 

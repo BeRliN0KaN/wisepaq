@@ -8,21 +8,19 @@
             },
             columnDefs: [{
                 "orderable": false,
-                "targets": [0, 8]
+                "targets": [0,5,7]
             }]
         });
     });
 </script>
-
 <?php
 // Delete Post.
 if (isset($_GET["deletePost"])) {
-    echo 'aaaaa';
-    exit;
     $post_id = $_GET['deletePost'];
     $post_image = $_GET['image'];
     $query = "DELETE FROM tbl_posts WHERE post_id=$post_id";
     $delete_query = mysqli_query($connection, $query);
+    unlink('../images/' . $post_image);
     header("Location: posts.php");
     if (!$delete_query) {
         die("Query Failed: " . mysqli_error($connection));
@@ -46,22 +44,6 @@ if (isset($_POST["apply"])) {
                     $query = "UPDATE tbl_posts SET post_status = '$bulk_option' WHERE post_id=$checkBoxValue";
                     $update_post = mysqli_query($connection, $query);
                     echo "<p class='alert alert-success'>Post draftted successfully.</p>";
-                    if (!$update_post) {
-                        die("Query Failed: " . mysqli_error($connection));
-                    }
-                    break;
-                case 'Important':
-                    $query = "UPDATE tbl_posts SET post_pin = '1' WHERE post_id=$checkBoxValue";
-                    $update_post = mysqli_query($connection, $query);
-                    echo "<p class='alert alert-success'>Post important successfully.</p>";
-                    if (!$update_post) {
-                        die("Query Failed: " . mysqli_error($connection));
-                    }
-                    break;
-                case 'Unimportant':
-                    $query = "UPDATE tbl_posts SET post_pin = '0' WHERE post_id=$checkBoxValue";
-                    $update_post = mysqli_query($connection, $query);
-                    echo "<p class='alert alert-success'>Post unimportant successfully.</p>";
                     if (!$update_post) {
                         die("Query Failed: " . mysqli_error($connection));
                     }
@@ -93,8 +75,6 @@ if (isset($_POST["apply"])) {
                     <option value="">Select Options</option>
                     <option value="Published">Publish</option>
                     <option value="Draft">Draft</option>
-                    <option value="Important">Important</option>
-                    <option value="Unimportant">Unimportant</option>
                     <option value="Delete">Delete</option>
                 </select>
             </div>
@@ -108,11 +88,8 @@ if (isset($_POST["apply"])) {
                 <th><input type='checkbox' id='selectAllBoxes' onclick="selectAll(this)"></th>
                 <th style="width:40px;">ID</th>
                 <th style="width: 300px;">Title[EN] / Title[TH] / Title[CH]</th>
-                <!-- <th style="width: 150px;">[ภาษาไทย] Title</th> -->
-                <th style="width: 300px;">Category[EN] / Category[TH]</th>
-                <!-- <th style="width: 150px;">[ภาษาไทย] Category</th> -->
+                <th style="width: 300px;">Category[EN] / Category[TH] / Category[CN]</th>
                 <th>Status</th>
-                <th style="width:48px ;">Pin </th>
                 <th style="width:100px">Image</th>
                 <th>Date</th>
                 <th>Action</th>
@@ -125,7 +102,6 @@ if (isset($_POST["apply"])) {
             while ($Row = mysqli_fetch_assoc($fetch_posts_data)) {
                 $the_post_id = $Row['post_id'];
                 $the_post_image = $Row['post_image'];
-                $the_posts_pin = $Row['post_pin'];
                 $the_post_title = base64_decode($Row['post_title']);
                 $the_post_title_thai = base64_decode($Row['post_title_thai']);
                 $the_post_title_china = base64_decode($Row['post_title_china']);
@@ -149,20 +125,14 @@ $the_post_title</a><br>
                 while ($Cat = mysqli_fetch_assoc($fetch_cat_data)) {
                     $cat_title = $Cat["cat_title"];
                     $cat_title_thai = $Cat["cat_title_thai"];
+                    $cat_title_china = $Cat['cat_title_china'];
                     if (isset($cat_title)) {
-                        echo "<td>$cat_title / $cat_title_thai</td>";
+                        echo "<td>$cat_title / $cat_title_thai/$cat_title_china</td>";
                         // echo "<td>$cat_title_thai</td>";
                     }
                 }
-                echo "<td>{$Row['post_status']}</td>";
-
-                if ($the_posts_pin === "1") {
-                    echo "<td><img src='../images/pin.png' alt='image'  width='20px' height='20px'></td>";
-                } else {
-                    echo "<td></td>";
-                }
-
-                echo "<td><img src='../images/$the_post_image ' alt='image' width='150px' height='auto' style='object-fit: contain; text-align:center; '></td>
+                echo "<td>{$Row['post_status']}</td>
+                    <td><img src='../images/$the_post_image ' alt='image' width='150px' height='auto' style='object-fit: contain; text-align:center; '></td>
                     <td>$date_time</td>
                     <td class='text-center'>
                         <a href='posts.php?source=edit_post&p_id=$the_post_id'><i class='bi bi-pencil-square' aria-hidden='true'></i></a> | 

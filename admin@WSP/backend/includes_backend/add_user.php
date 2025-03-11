@@ -5,6 +5,7 @@ if (isset($_POST['add_user'])) {
     $user_name = $_POST['username'];
     $user_password = password_hash($_POST['password'], PASSWORD_DEFAULT);
     $user_email = $_POST['email'];
+    $user_role = $_POST['user_role'];
 
     // ตรวจสอบว่ามีการอัปโหลดรูปภาพหรือไม่
     if (!empty($_FILES['user_image']['name'])) {
@@ -29,8 +30,8 @@ if (isset($_POST['add_user'])) {
     if ($user == 0) {
 
         // Add new user.
-        $query = "INSERT INTO tbl_users(user_firstname, user_lastname, user_name, user_password, user_email,user_image) ";
-        $query .= "VALUES('{$user_firstname}', '{$user_lastname}', '{$user_name}', '{$user_password}', '{$user_email}','{$user_image}')";
+        $query = "INSERT INTO tbl_users(user_firstname, user_lastname, user_name, user_password, user_email,user_image,user_role) ";
+        $query .= "VALUES('{$user_firstname}', '{$user_lastname}', '{$user_name}', '{$user_password}', '{$user_email}','{$user_image}','{$user_role}')";
 
         $create_user_query = mysqli_query($connection, $query);
         if (!$create_user_query) {
@@ -79,6 +80,19 @@ if (isset($_POST['add_user'])) {
             }
         });
     </script>
+    <div class="form-group mt-3">
+        <label for="username" class="ms-3 fw-bold">Role</label>
+        <select  id="role" class="form-control mt-2" name="user_role">
+            <option value="subscribe">Select Role</option>
+            <option value="admin">Admin</option>
+            <option value="subscriber">Subscriber</option>
+        </select>
+    </div>
+
+    <div class="form-group mt-3">
+        <label for="username" class="ms-3 fw-bold">Username</label>
+        <input type="text" class="form-control mt-2" name="username">
+    </div>
 
     <div class="form-group mt-3">
         <label for="firstname" class="ms-3 fw-bold">Firstname</label>
@@ -91,20 +105,14 @@ if (isset($_POST['add_user'])) {
     </div>
 
     <div class="form-group mt-3">
-        <label for="username" class="ms-3 fw-bold">Username</label>
-        <input type="text" class="form-control mt-2" name="username">
+        <label for="email" class="ms-3 fw-bold">Email</label>
+        <input type="email" class="form-control mt-2" name="email">
     </div>
 
     <div class="form-group mt-3">
         <label for="password" class="ms-3 fw-bold">Password</label>
         <input type="password" class="form-control mt-2" name="password">
     </div>
-
-    <div class="form-group mt-3">
-        <label for="email" class="ms-3 fw-bold">Email</label>
-        <input type="email" class="form-control mt-2" name="email">
-    </div>
-
 
     <div class="form-group mt-3">
         <input type="submit" class="btn btn-primary" name="add_user" value="Add User">

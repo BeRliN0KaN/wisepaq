@@ -11,7 +11,6 @@ if (isset($_POST['update_post'], $_GET['p_id'])) {
     $post_link_url = $_POST['link_url'];
     $post_category_id = $_POST['post_category'];
     $post_status = $_POST['post_status'];
-    $post_pin = $_POST['post_pin'];
 
     $post_content = base64_encode($_POST['post_content']);
     $post_content_thai = base64_encode($_POST['post_content_thai']);
@@ -42,7 +41,6 @@ if (isset($_POST['update_post'], $_GET['p_id'])) {
     $query .= "post_subtitle_thai='$post_subtitle_thai', ";
     $query .= "post_subtitle_china='$post_subtitle_china', ";
     $query .= "post_link='$post_link_url', ";
-    $query .= "post_pin='$post_pin', ";
     $query .= "post_date='$post_date', ";
     $query .= !empty($post_image) ? "post_image='$post_image', " : null;
     $query .= "post_content='$post_content', ";
@@ -78,7 +76,6 @@ if (isset($_GET['p_id'])) {
         $post_link_url = $Row['post_link'];
         $post_category_id = $Row['post_category_id'];
         $post_status = $Row['post_status'];
-        $post_pin = $Row['post_pin'];
         $post_image_old = $Row['post_image'];
         $post_image = $Row['post_image'];
         $post_date = $Row['post_date'];
@@ -87,12 +84,6 @@ if (isset($_GET['p_id'])) {
         $post_content_china = base64_decode($Row['post_content_china']);
 ?>
         <form action="" method="post" enctype="multipart/form-data" class="row g-3">
-            <!--                        <div class="form-group">
-                                        <img src='../images/<?php echo $post_image ?>' alt='image' width='100px'>
-                                        <input type="file" name="post_image">
-                                        <input type="hidden" id="post_image_old" name="post_image_old" value="<?php echo $post_image_old; ?>">
-                                    </div>-->
-            <!--x-->
             <div class="form-group col-lg-12">
                 <label for="post_image" class="d-block fw-bold ms-3">Post Image</label>
                 <div>
@@ -103,7 +94,6 @@ if (isset($_GET['p_id'])) {
                     <input type="hidden" id="post_image_old" name="post_image_old" value="<?php echo $post_image_old; ?>">
                 </div>
                 <div id="preview-container">
-                    <!-- หากมี post_image_old ให้แสดงรูปเก่าหากไม่มีให้แสดงเป็น "no-image" -->
                     <img id="preview-image" src='../images/<?php echo $post_image ? $post_image : '#'; ?>' alt="Preview Image" class="img-post" style="display: <?php echo $post_image ? 'block' : 'none'; ?>;">
                 </div>
             </div>
@@ -122,7 +112,7 @@ if (isset($_GET['p_id'])) {
                     }
                 });
             </script>
-            <div class="form-group col-lg-12">
+            <div class="form-group col-lg-4">
                 <label class="ms-3 fw-bold" for="link">Link Url</label>
                 <input type="text" class="form-control mt-2" value="<?php echo $post_link_url ?>" name="link_url">
             </div>
@@ -152,17 +142,6 @@ if (isset($_GET['p_id'])) {
                         <option value='Draft'>Draft</option>
                     <?php } else { ?>
                         <option value='Published'>Published</option>
-                    <?php } ?>
-                </select>
-            </div>
-            <div class="form-group col-lg-4">
-                <label class="ms-3 fw-bold" for="post_pin">Post Pin</label>
-                <select class="form-control mt-2" name="post_pin" id="post_category">
-                    <option value='<?php echo $post_pin; ?>'><?php echo ($post_pin === "1") ? "Important" : "Unimportant"; ?></option>
-                    <?php if ($post_pin === "1") { ?>
-                        <option value='0'>Unimportant</option>
-                    <?php } else { ?>
-                        <option value='1'>Important</option>
                     <?php } ?>
                 </select>
             </div>

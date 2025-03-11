@@ -9,7 +9,6 @@ if (isset($_POST['create_post'])) {
     $activity_subtitle_china = base64_encode($_POST['subtitle_china']);
     $activity_link_url = $_POST['link_url'];
     $activity_status = $_POST['activity_status'];
-    $activity_pin = $_POST['activity_pin'];
 
     $path = $_FILES['activity_image']['name'];
     $ext = pathinfo($path, PATHINFO_EXTENSION);
@@ -25,8 +24,8 @@ if (isset($_POST['create_post'])) {
     move_uploaded_file($activity_image_temp, "../activity/$activity_image");
 
     // Add new Post.
-    $query = "INSERT INTO tbl_activity(activity_title, activity_title_thai, activity_title_china, activity_date, activity_image, activity_content, activity_content_thai, activity_content_china, activity_status,activity_subtitle,activity_subtitle_thai,activity_subtitle_china, activity_link,activity_pin) ";
-    $query .= "VALUES( '{$activity_title}', '{$activity_title_thai}',  '{$activity_title_china}','{$activity_date}', '{$activity_image}', '{$activity_content}', '{$activity_content_thai}', '{$activity_content_china}', '{$activity_status}','{$activity_subtitle}','{$activity_subtitle_thai}','{$activity_subtitle_china}','{$activity_link_url}','{$activity_pin}')";
+    $query = "INSERT INTO tbl_activity(activity_title, activity_title_thai, activity_title_china, activity_date, activity_image, activity_content, activity_content_thai, activity_content_china, activity_status,activity_subtitle,activity_subtitle_thai,activity_subtitle_china, activity_link) ";
+    $query .= "VALUES( '{$activity_title}', '{$activity_title_thai}',  '{$activity_title_china}','{$activity_date}', '{$activity_image}', '{$activity_content}', '{$activity_content_thai}', '{$activity_content_china}', '{$activity_status}','{$activity_subtitle}','{$activity_subtitle_thai}','{$activity_subtitle_china}','{$activity_link_url}')";
     $create_post_query = mysqli_query($connection, $query);
     $the_activity_id = mysqli_insert_id($connection);
     if (!$create_post_query) {
@@ -39,12 +38,6 @@ if (isset($_POST['create_post'])) {
 ?>
 
 <form action="" method="post" enctype="multipart/form-data" class="row g-3">
-    <!--                        <div class="form-group">
-                                        <img src='../images/<?php echo $activity_image ?>' alt='image' width='100px'>
-                                        <input type="file" name="post_image">
-                                        <input type="hidden" id="post_image_old" name="post_image_old" value="<?php echo $activity_image_old; ?>">
-                                    </div>-->
-    <!--x-->
     <div class="form-group col-lg-12">
         <label for="activity_image" class="d-block ms-3 fw-bold ms-3">Activity Image</label>
         <div>
@@ -55,7 +48,6 @@ if (isset($_POST['create_post'])) {
             <input type="hidden" id="activity_image_old" name="activity_image_old" value="<?php echo $activity_image_old; ?>">
         </div>
         <div id="preview-container">
-            <!-- หากมี post_image_old ให้แสดงรูปเก่าหากไม่มีให้แสดงเป็น "no-image" -->
             <img id="preview-image" src='../activity/<?php echo $activity_image ? $activity_image : '#'; ?>' alt="Preview Image" class="img-post" style="display: <?php echo $activity_image ? 'block' : 'none'; ?>;">
         </div>
     </div>
@@ -74,24 +66,16 @@ if (isset($_POST['create_post'])) {
             }
         });
     </script>
-    <div class="form-group col-lg-12">
+    <div class="form-group col-lg-6">
         <label class=" fw-bold ms-3" for="link">Link Url</label>
         <input type="text" class="form-control  mt-2" name="link_url">
     </div>
-    <div class="form-group col-lg-4">
+    <div class="form-group col-lg-6">
         <label class="fw-bold ms-3" for="activity_status">Activity Status</label>
         <select class="form-control mt-2" name="activity_status" id="Activity_category">
             <option value='Draft'>Select Option</option>
             <option value='Published'>Published</option>
             <option value='Draft'>Draft</option>
-        </select>
-    </div>
-    <div class="form-group col-lg-4">
-        <label class="fw-bold ms-3" for="activity_pin">Activity Pin</label>
-        <select class="form-control mt-2" name="activity_pin" id="activity_category">
-            <option value='0'>Select Option</option>
-            <option value='1'>Important</option>
-            <option value='0'>Unimportant</option>
         </select>
     </div>
     <div class="form-group  col-lg-6">

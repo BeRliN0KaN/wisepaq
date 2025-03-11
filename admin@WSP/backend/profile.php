@@ -90,16 +90,18 @@ if (isset($_POST['change_password'], $_SESSION['username'])) {
 }
 
 //Delete Account
-// Delete User.
 if (isset($_POST["delete"], $_SESSION['username'])) {
     $the_user_name = $_SESSION['username'];
+    $user_image = $_SESSION['user_image'];
     $query = "DELETE FROM tbl_users WHERE user_name='$the_user_name'";;
     $delete_query = mysqli_query($connection, $query);
-    header("Location: ../index.php");
-    if (!$delete_query) {
-        die("Query Failed: " . mysqli_error($connection));
-    } else {
+    if ($delete_query) {
+        unlink('../profile/' . $user_image);
         session_destroy();
+        header("Location: ../index.php");
+        exit();
+    } else {
+        die("Query Failed: " . mysqli_error($connection));
     }
 }
 
@@ -119,9 +121,9 @@ if (isset($_POST["delete"], $_SESSION['username'])) {
     <?php
     if (isset($_SESSION['messages']) && is_array($_SESSION['messages'])) {
         foreach ($_SESSION['messages'] as $msg) {
-            echo $msg; // แสดงทุกข้อความที่อยู่ใน session
+            echo $msg;
         }
-        unset($_SESSION['messages']); // ล้าง session หลังแสดงผล
+        unset($_SESSION['messages']);
     }
     ?>
     <section class="section profile">
@@ -131,11 +133,15 @@ if (isset($_POST["delete"], $_SESSION['username'])) {
                 <div class="card">
                     <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
                         <?php
-                        echo "<img src='../profile/{$_SESSION['user_image']}' alt='Profile' class='rounded-circle' style='width: 100px; height: 100px; object-fit: cover; border-radius: 50%;'>
-<h2>{$_SESSION['username']}</h2>";
+                        if ($_SESSION['user_image'] == "default.jpg") {
+                            echo "<img src='../../img/img-icon/123.webp' alt='Profile' class='rounded-circle' style='width: 100px; height: 100px; object-fit: cover; border-radius: 50%;'>";
+                        } else {
+                            echo "<img src='../profile/{$_SESSION['user_image']}' alt='Profile' class='rounded-circle' style='width: 100px; height: 100px; object-fit: cover; border-radius: 50%;'>";
+                        }
+                        echo  "<h2>{$_SESSION['username']}</h2>";
                         ?>
 
-                        <h3>Web Designer</h3>
+                        <span><?php echo $_SESSION['user_role']; ?></span>
                         <div class="social-links mt-2">
                             <a href="#" class="linkedin"><i class="bi bi-display"></i></a>
                             <a href="#" class="linkedin"><i class="bi bi-body-text"></i></a>
