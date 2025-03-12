@@ -1,14 +1,14 @@
 <?php 
 session_start();
-function isMobile() {
-    return preg_match('/(android|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile)/i', $_SERVER['HTTP_USER_AGENT']);
-}
+// function isMobile() {
+//     return preg_match('/(android|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile)/i', $_SERVER['HTTP_USER_AGENT']);
+// }
 
-if (isMobile()) {
-    // ถ้าเป็นมือถือ ให้เปลี่ยนเส้นทางไปยังหน้าอื่น
-    header('Location: ../index.php');
-    exit;
-}
+// if (isMobile()) {
+//     // ถ้าเป็นมือถือ ให้เปลี่ยนเส้นทางไปยังหน้าอื่น
+//     header('Location: ../index.php');
+//     exit;
+// }
 ?>
 <!DOCTYPE html>
 <html lang="en">
