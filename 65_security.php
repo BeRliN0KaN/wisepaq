@@ -60,7 +60,7 @@
                 <p class="mb-4"><?php echo $the_post_content ?></p>
              </div>
              <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
-                <img class="img-fluid rounded" src="<?php echo "admin@WSP//images/" . $the_post_image; ?>">
+                <img class="img-fluid rounded" src="<?php echo "admin@WSP/post/" . $the_post_image; ?>">
              </div>
           </div>
     <?php

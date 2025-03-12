@@ -71,7 +71,7 @@
              <div class="row g-5 py-5 align-items-center">
                  <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
                      <div class="img-border">
-                         <img class="img-fluid " src="<?php echo "admin@WSP//images/" . $the_post_image; ?>" alt="" />
+                         <img class="img-fluid " src="<?php echo "admin@WSP/post/" . $the_post_image; ?>" alt="" />
                      </div>
                  </div>
                  <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
@@ -97,7 +97,7 @@
                  </div>
                  <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
                      <div class="img-border">
-                         <img class="img-fluid" src="<?php echo "admin@WSP//images/" . $the_post_image; ?>" alt="" />
+                         <img class="img-fluid" src="<?php echo "admin@WSP/post/" . $the_post_image; ?>" alt="" />
                      </div>
                  </div>
              </div>

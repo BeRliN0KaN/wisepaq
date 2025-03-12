@@ -112,7 +112,7 @@
                    </ul>
                 </div>
                 <div class="col-lg-6 order-1 order-lg-2 text-center">
-                   <img src="<?php echo "admin@WSP//images/" . $the_post_image; ?>" alt="" class="img-fluid rounded-3 shadow-lg" style="height:35rem; width:80%;">
+                   <img src="<?php echo "admin@WSP/post/" . $the_post_image; ?>" alt="" class="img-fluid rounded-3 shadow-lg" style="height:35rem; width:80%;">
                 </div>
              </div>
        </div> <!-- End tab content item -->

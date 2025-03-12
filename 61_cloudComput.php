@@ -36,7 +36,7 @@
                  <div class="rounded-3 service-item text-center p-4 pb-0 flex-column align-items-center mt-5 text-wrap" >
 
                      <div class="blog-item">
-                         <img src="<?php echo "admin@WSP//images/" . $the_post_image; ?>" class="img-fluid rounded-2" style="object-fit:contran; width:100% ;height:35vh" alt="">
+                         <img src="<?php echo "admin@WSP/post/" . $the_post_image; ?>" class="img-fluid rounded-2" style="object-fit:contran; width:100% ;height:35vh" alt="">
                      </div>
 
                      <br>
