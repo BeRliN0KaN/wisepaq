@@ -1,7 +1,7 @@
 <?php
 include "../backend/includes_backend/header.php";
 include "../backend/includes_backend/navigation.php";
-
+$messages = [];
 if (isset($_POST['update_profile'], $_SESSION['username'])) {
     $the_user_name = $_SESSION['username'];
 
@@ -25,17 +25,38 @@ if (isset($_POST['update_profile'], $_SESSION['username'])) {
         $user_image = $user_image_old;
     }
     // Check exist user.
+    if ($the_user_name == $user_username) {
+        // Update a User.
+        $query = "UPDATE tbl_users SET ";
+        $query .= "user_firstname='$user_firstname', ";
+        $query .= "user_lastname='$user_lastname', ";
+        $query .= "user_name='$user_username', ";
+        // $query .= "user_password='$password', ";
+        $query .= "user_email='$user_email', ";
+        $query .= "user_image='$user_image' ";
+        $query .= " WHERE user_name='$the_user_name'";
+
+        $update_user_query = mysqli_query($connection, $query);
+
+        if (!$update_user_query) {
+            die("Query Failed: " . mysqli_error($connection));
+        } else {
+            $_SESSION['username'] = $user_username;
+            $_SESSION['user_image'] = $user_image;
+            $_SESSION['firstname'] = $user_firstname;
+            $_SESSION['lastname'] = $user_lastname;
+            $_SESSION['email'] = $user_email;
+        }
+    }else{
     $user = 1;
-    $queryExist = "SELECT EXISTS(SELECT * FROM tbl_users WHERE user_name = '$user_name') as user";
+    $queryExist = "SELECT EXISTS(SELECT * FROM tbl_users WHERE user_name = '$user_username') as user";
     $fetch_data = mysqli_query($connection, $queryExist);
     while ($Row = mysqli_fetch_assoc($fetch_data)) {
         $user = $Row['user'];
     }
-
     if ($user == 0) {
-
         // Update a User.
-        $query = "UPDATE IGNORE tbl_users SET ";
+        $query = "UPDATE tbl_users SET ";
         $query .= "user_firstname='$user_firstname', ";
         $query .= "user_lastname='$user_lastname', ";
         $query .= "user_name='$user_username', ";
@@ -56,14 +77,14 @@ if (isset($_POST['update_profile'], $_SESSION['username'])) {
             $_SESSION['email'] = $user_email;
         }
     } else {
-        echo "<script>alert('This user already in the system!');window.history.go(-1);</script>";
+        $_SESSION['messages'][] = "<p class='alert alert-danger'>⚠️ This user already in the system!!</p>";
+        // $_SESSION['messages'][] = "<script>alert('This user already in the system!!');window.history.go(-1);</script>";
     }
-
+    }
     header("Location: ../backend/profile.php");
     exit();
 }
 //Change Password
-$messages = [];
 if (isset($_POST['change_password'], $_SESSION['username'])) {
     if (!empty($_POST['currentpassword']) && !empty($_POST['newpassword']) && !empty($_POST['renewpassword'])) {
         $the_user_name = $_SESSION['username'];
