@@ -113,7 +113,6 @@ if (isset($_POST["delete"], $_SESSION['username'])) {
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                <li class="breadcrumb-item">Users</li>
                 <li class="breadcrumb-item active">Profile</li>
             </ol>
         </nav>
@@ -246,8 +245,15 @@ if (isset($_POST["delete"], $_SESSION['username'])) {
                                         <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
                                         <div class="col-md-8 col-lg-9">
                                             <div id="preview-container">
-                                                <!-- หากมี post_image_old ให้แสดงรูปเก่าหากไม่มีให้แสดงเป็น "no-image" -->
-                                                <img id="preview-image" src='../profile/<?php echo $user_image ? $user_image : '#'; ?>' alt="Preview Image" class="img-post" style="display: <?php echo $user_image ? 'block' : 'none'; ?>; height:auto;">
+                                                <?php
+                                                if ($user_image == "default.jpg") {
+                                                    // แสดงรูปภาพจากตำแหน่งที่กำหนดเมื่อไม่มีการตั้งค่าโปรไฟล์
+                                                    echo "<img id='preview-image' src='../images/img-icon/profile.webp' alt='Preview Image' class='img-post' style='display:block; height:auto;'>";
+                                                } else {
+                                                    // แสดงรูปภาพโปรไฟล์เมื่อมีการตั้งค่า
+                                                    echo "<img id='preview-image' src='../profile/{$user_image}' alt='Preview Image' class='img-post' style='display:block; height:auto;'>";
+                                                }
+                                                ?>
                                             </div>
                                             <div class="pt-2">
                                                 <label for="user_image" class="upload-icon">
