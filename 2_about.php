@@ -43,7 +43,7 @@
                 <div class="col-xl-6" data-aos="fade-up" data-aos-delay="300">
                     <div class="image-wrapper">
                         <div class="images position-relative" data-aos="zoom-out" data-aos-delay="400">
-                            <img src="<?php echo "admin@WSP/images/" . $the_post_image; ?>" alt="Business Meeting" class="img-fluid main-image rounded-4 " style="height:11cm">
+                            <img src="<?php echo "admin@WSP/post/" . $the_post_image; ?>" alt="Business Meeting" class="img-fluid main-image rounded-4 " style="height:11cm">
                             <img src="https://ckbox.cloud/b4d6cbdf0ce5ece78c1c/assets/f2PJgV5asdj8/images/1024.webp" alt="Team Discussion" class="img-fluid small-image rounded-4 ">
                         </div>
                         <div class="experience-badge floating">
@@ -160,7 +160,7 @@
                     <div class="service-item text-center rounded-4 p-4 d-flex flex-column w-100 shadow-lg">
                         <div class="blog-item flex-grow-1">
                             <div class="blog-img overflow-hidden" style="position: relative;">
-                                <img src="<?php echo "admin@WSP/images/" . $the_post_image; ?>" class="img-fluid" style="object-fit: cover; height: 200px; width: 100%;" alt="">
+                                <img src="<?php echo "admin@WSP/post/" . $the_post_image; ?>" class="img-fluid" style="object-fit: cover; height: 200px; width: 100%;" alt="">
                             </div>
                             <div class="service-content">
                                 <h6 class="my-3 fw-bold"><?php echo $the_post_title; ?></h6>

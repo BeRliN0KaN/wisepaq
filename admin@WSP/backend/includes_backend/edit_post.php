@@ -25,8 +25,8 @@ if (isset($_POST['update_post'], $_GET['p_id'])) {
         $ext = pathinfo($path, PATHINFO_EXTENSION);
         $post_image = strtotime(date("Y-m-d H:i:s")) . '.' . $ext;
 
-        unlink("../images/$post_image_old");
-        move_uploaded_file($post_image_temp, "../images/$post_image");
+        unlink("../post/$post_image_old");
+        move_uploaded_file($post_image_temp, "../post/$post_image");
     } else {
         $post_image = $post_image_old;
     }
@@ -94,7 +94,7 @@ if (isset($_GET['p_id'])) {
                     <input type="hidden" id="post_image_old" name="post_image_old" value="<?php echo $post_image_old; ?>">
                 </div>
                 <div id="preview-container">
-                    <img id="preview-image" src='../images/<?php echo $post_image ? $post_image : '#'; ?>' alt="Preview Image" class="img-post" style="display: <?php echo $post_image ? 'block' : 'none'; ?>;">
+                    <img id="preview-image" src='../post/<?php echo $post_image ? $post_image : '#'; ?>' alt="Preview Image" class="img-post" style="display: <?php echo $post_image ? 'block' : 'none'; ?>;">
                 </div>
             </div>
 

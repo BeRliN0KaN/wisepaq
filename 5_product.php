@@ -36,7 +36,7 @@
                      <div class="service-item text-left rounded-3 p-4 d-flex flex-column w-100 h-100 shadow-lg">
                          <div class="blog-item flex-grow-1">
                              <div class="blog-img overflow-hidden d-flex justify-content-center mt-2" style="position: relative;">
-                                 <img src="<?php echo "admin@WSP/images/" . $the_post_image; ?>" class="img-fluid " style="object-fit: cover; height: auto; width: auto;" alt="">
+                                 <img src="<?php echo "admin@WSP/post/" . $the_post_image; ?>" class="img-fluid " style="object-fit: cover; height: auto; width: auto;" alt="">
                              </div>
                              <hr>
                              <div class="service-content">

@@ -22,13 +22,9 @@ if (!isset($_SESSION['username'])) {
   <title>WISEPAQ | วางระบบ network | Thailand</title>
 
   <!-- Favicon -->
-  <link href="../../img/logo/wisepaq.jpg" rel="icon">
+  <link href="../images/logo/wisepaq.jpg" rel="icon">
   <meta content="" name="description">
   <meta content="" name="keywords">
-
-  <!-- Favicons -->
-  <link href="img/favicon.png" rel="icon">
-  <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
@@ -97,7 +93,7 @@ if (!isset($_SESSION['username'])) {
             <div >
               <?php
               if($_SESSION['user_image']=="default.jpg"){
-                echo "<img src='../../img/img-icon/123.webp' alt='' class='rounded-circle' style='width: 40px; height:50px;object-fit: cover;'>";
+                echo "<img src='../images/img-icon/profile.webp' alt='' class='rounded-circle' style='width: 40px; height:50px;object-fit: cover;'>";
                  
               }else{
                 echo "<img src='../profile/{$_SESSION['user_image']}' alt='' class='rounded-circle' style='width: 40px; height:50px;object-fit: cover;'>";

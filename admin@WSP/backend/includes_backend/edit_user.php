@@ -61,7 +61,7 @@ if (isset($_GET['user_id'])) {
                     <?php
                     if ($user_image == "default.jpg") {
                         // แสดงรูปภาพจากตำแหน่งที่กำหนดเมื่อไม่มีการตั้งค่าโปรไฟล์
-                        echo "<img id='preview-image' src='../../img/img-icon/123.webp' alt='Preview Image' class='img-post' style='display:block; height:auto;'>";
+                        echo "<img id='preview-image' src='../images/img-icon/profile.webp' alt='Preview Image' class='img-post' style='display:block; height:auto;'>";
                     } else {
                         // แสดงรูปภาพโปรไฟล์เมื่อมีการตั้งค่า
                         echo "<img id='preview-image' src='../profile/{$user_image}' alt='Preview Image' class='img-post' style='display:block; height:auto;'>";

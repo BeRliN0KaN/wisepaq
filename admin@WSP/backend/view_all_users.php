@@ -101,7 +101,7 @@ if (isset($_POST["delete"])) {
                             $user_email = $Row['user_email'];
 
                         if($user_image == "default.jpg"){
-                            $user_image = "<img src='../../img/img-icon/123.webp' width='150px' height='auto' style='object-fit: contain; text-align:center; '>";
+                            $user_image = "<img src='../images/img-icon/profile.webp' width='150px' height='auto' style='object-fit: contain; text-align:center; '>";
                         }else{
                             $user_image = "<img src='../profile/{$user_image}' width='150px' height='auto' style='object-fit: contain; text-align:center; '>";
                         }

@@ -22,14 +22,10 @@ if (isMobile()) {
     <title>WISEPAQ | วางระบบ network | Thailand</title>
 
     <!-- Favicon -->
-    <link href="../img/logo/wisepaq.jpg" rel="icon">
+    <link href="images/logo/wisepaq.jpg" rel="icon">
 
     <!-- Bootstrap Core CSS -->
     <link href="css/style.css" rel="stylesheet">
-
-     <!-- Favicons -->
-  <link href="img/favicon.png" rel="icon">
-  <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">

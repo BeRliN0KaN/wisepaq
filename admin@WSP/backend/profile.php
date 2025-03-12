@@ -134,7 +134,7 @@ if (isset($_POST["delete"], $_SESSION['username'])) {
                     <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
                         <?php
                         if ($_SESSION['user_image'] == "default.jpg") {
-                            echo "<img src='../../img/img-icon/123.webp' alt='Profile' class='rounded-circle' style='width: 100px; height: 100px; object-fit: cover; border-radius: 50%;'>";
+                            echo "<img src='../images/img-icon/profile.webp' alt='Profile' class='rounded-circle' style='width: 100px; height: 100px; object-fit: cover; border-radius: 50%;'>";
                         } else {
                             echo "<img src='../profile/{$_SESSION['user_image']}' alt='Profile' class='rounded-circle' style='width: 100px; height: 100px; object-fit: cover; border-radius: 50%;'>";
                         }

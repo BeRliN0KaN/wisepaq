@@ -22,7 +22,7 @@ if (isset($_POST['create_post'])) {
     $post_date = date("Y-m-d H:i:s");  // date('d-m-y');
     $post_comemnt_id = 0;
 
-    move_uploaded_file($post_image_temp, "../images/$post_image");
+    move_uploaded_file($post_image_temp, "../post/$post_image");
 
     // Add new Post.
     $query = "INSERT INTO tbl_posts(post_category_id, post_title, post_title_thai,post_title_china, post_date, post_image, post_content, post_content_thai, post_status,post_subtitle,post_subtitle_thai,post_subtitle_china,post_link,post_content_china) ";

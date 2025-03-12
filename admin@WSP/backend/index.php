@@ -129,7 +129,6 @@
                     </div><!-- End Website Traffic -->
                     <!-- Categories Post Card -->
 
-
                 </div><!-- End Right side columns -->
             </div>
             <!-- Right side columns -->
@@ -139,8 +138,9 @@
                         <h5 class="card-title" id="chartTitle">Website Visitors by Device</h5>
 
                         <!-- Bar Chart -->
-                        <div id="barChart" style=" height: 400px;"></div>
-
+                        <div id="barChartContainer" style="width: 100%; overflow: hidden;">
+                            <div id="barChart" style="width: 100%; height: 400px;"></div>
+                        </div>
                         <?php
                         $result = mysqli_query($connection, "SELECT COUNT(*) as total_visitors FROM tbl_site_visitors");
                         $row = mysqli_fetch_assoc($result);
@@ -151,14 +151,13 @@
                                 let chart = echarts.init(document.getElementById("barChart"));
 
                                 // ดึงข้อมูลจาก get_visitors.php
-                                fetch('includes_backend/get_visitors.php') // ใช้ URL ที่ส่งข้อมูล JSON
-                                    .then(response => response.json()) // แปลงข้อมูลที่ได้รับเป็น JSON
+                                fetch('includes_backend/get_visitors.php')
+                                    .then(response => response.json())
                                     .then(data => {
-                                        console.log(data); // ตรวจสอบว่าได้รับข้อมูลถูกต้อง
+                                        console.log(data);
 
-                                        // แปลงค่า total จาก string เป็น number
                                         let labels = data.map(item => item.device_type);
-                                        let visitors = data.map(item => Number(item.total)); // แปลง total เป็นตัวเลข
+                                        let visitors = data.map(item => Number(item.total));
                                         let colors = ["#FFC300", "#05abe5", "#2ECF76"];
 
                                         // กำหนด options สำหรับกราฟ
@@ -166,10 +165,9 @@
                                             title: {
                                                 text: "Total number of website visitors: <?php echo $total_visitors; ?>",
                                                 textStyle: {
-                                                    
-                                                    fontSize: 14, // ปรับขนาดฟอนต์ (เช่น ขนาด 14px)
-                                                    fontWeight: 'normal', // ปรับน้ำหนักฟอนต์ให้เป็นปกติ
-                                                    color: '#333' // กำหนดสีของข้อความ
+                                                    fontSize: 14,
+                                                    fontWeight: 'normal',
+                                                    color: '#333'
                                                 }
                                             },
                                             tooltip: {
@@ -187,111 +185,19 @@
                                                 data: visitors,
                                                 itemStyle: {
                                                     color: function(params) {
-                                                        // เลือกสีตามดัชนีของแต่ละแท่ง
                                                         return colors[params.dataIndex % colors.length];
                                                     }
                                                 }
                                             }]
                                         });
+
+                                        window.addEventListener("resize", function() {
+                                            chart.resize();
+                                        });
                                     })
                                     .catch(error => console.error("Error:", error));
                             });
                         </script>
-
-                        <!-- <script>
-                            document.addEventListener("DOMContentLoaded", () => {
-                                const chart = echarts.init(document.querySelector("#barChart"));
-                                const currentFilterText = document.getElementById("currentFilterText");
-                                const chartTitle = document.getElementById("chartTitle"); // อ้างอิงหัวข้อกราฟ
-
-                                // 📌 ฟังก์ชันดึงข้อมูลตามช่วงเวลา
-                                function getChartData(filter) {
-                                    if (filter === "daily") {
-                                        return {
-                                            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-                                            data: [270, 200, 150, 80, 70, 110, 130]
-                                        };
-                                    } else if (filter === "weekly") {
-                                        return {
-                                            labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
-                                            data: [1200, 1350, 1100, 1450]
-                                        };
-                                    } else if (filter === "monthly") {
-                                        return {
-                                            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-                                            data: [5000, 5200, 4900, 5300, 5500, 5100]
-                                        };
-                                    } else if (filter === "yearly") {
-                                        return {
-                                            labels: ['2020', '2021', '2022', '2023', '2024'],
-                                            data: [60000, 75000, 72000, 81000, 90000]
-                                        };
-                                    }
-                                }
-
-                                // 📌 ฟังก์ชันอัปเดตกราฟ
-                                function updateChart(filter) {
-                                    const {
-                                        labels,
-                                        data
-                                    } = getChartData(filter);
-                                    const barColors = ['#FFC300', '#e64eea', '#238c33', '#e57c05', '#05abe5', '#8f34e0', '#b90000'];
-
-                                    const seriesData = data.map((value, index) => ({
-                                        value: value,
-                                        itemStyle: {
-                                            color: barColors[index % barColors.length]
-                                        }
-                                    }));
-
-                                    chart.setOption({
-                                        tooltip: {
-                                            trigger: 'axis',
-                                            axisPointer: {
-                                                type: 'shadow'
-                                            }
-                                        },
-                                        xAxis: {
-                                            type: 'category',
-                                            data: labels
-                                        },
-                                        yAxis: {
-                                            type: 'value'
-                                        },
-                                        series: [{
-                                            type: 'bar',
-                                            data: seriesData
-                                        }]
-                                    });
-
-                                    // อัปเดตข้อความแสดงช่วงเวลาปัจจุบัน
-                                    const filterText = {
-                                        daily: "Daily",
-                                        weekly: "Weekly",
-                                        monthly: "Monthly",
-                                        yearly: "Yearly"
-                                    };
-
-                                    // อัปเดตข้อความหัวข้อและข้อความแสดงช่วงเวลา
-
-                                    chartTitle.innerHTML = `Website Traffic <span class='fs-6'>| ${filterText[filter]}</span>`; // อัปเดตหัวข้อกราฟ
-                                }
-
-                                // โหลดกราฟเริ่มต้น (รายวัน)
-                                updateChart("daily");
-
-                                // เปลี่ยนข้อมูลเมื่อเลือกช่วงเวลาใน dropdown
-                                const dropdownItems = document.querySelectorAll('.dropdown-item');
-                                dropdownItems.forEach(item => {
-                                    item.addEventListener('click', (event) => {
-                                        const filterValue = event.target.getAttribute('data-value');
-                                        updateChart(filterValue);
-                                    });
-                                });
-                            });
-                        </script> -->
-                        <!-- End Bar Chart -->
-
                     </div>
                 </div>
             </div><!-- End Right side columns -->
