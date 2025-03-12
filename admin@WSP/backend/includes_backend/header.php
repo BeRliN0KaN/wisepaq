@@ -77,11 +77,11 @@ if (!isset($_SESSION['username'])) {
   <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-      <a href="index.php" class="logo d-flex align-items-center" style="width: 11rem;">
-        <span class="d-none d-lg-block">WISEPAQ</span>
-        <sub class="fs-5" style="color:#578FCA;">Admin</sub>
+      <a href="#" class="logo d-flex align-items-center" style="width: 11rem;">
+        <span class="toggle-sidebar-btn" style="font-size: 1.7rem;">WISEPAQ<sub class="fs-5" style="color:#578FCA;">Admin</sub></span>
+        
       </a>
-      <i class="bi bi-list toggle-sidebar-btn"></i>
+      <!-- <i class="bi bi-list toggle-sidebar-btn"></i> -->
     </div><!-- End Logo -->
 
 
