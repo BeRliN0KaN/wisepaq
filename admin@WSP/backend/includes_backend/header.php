@@ -78,7 +78,7 @@ if (!isset($_SESSION['username'])) {
 
     <div class="d-flex align-items-center justify-content-between">
       <a href="#" class="logo d-flex align-items-center" style="width: 11rem;">
-        <span class="toggle-sidebar-btn fs-lg-3 fs-1 ps-1" >WISEPAQ<sub class="fs-5" style="color:#578FCA;">Admin</sub></span>
+        <span class="toggle-sidebar-btn fs-3 ps-1" >WISEPAQ<sub class="fs-5" style="color:#578FCA;">Admin</sub></span>
         
       </a>
       <!-- <i class="bi bi-list toggle-sidebar-btn"></i> -->
